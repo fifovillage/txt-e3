@@ -15,7 +15,7 @@ $(document).ready(function(){
       if(input == "help"){
           $("#msgHelp").clone().insertBefore("#placeholder").fadeIn(1000);
       }
-      else if(input == "take bug" && currentArea = "nBog"){
+      else if(input == "take bug" && currentArea == "nBog"){
           $("<p>The bug is in your hands.</p>").insertBefore("#placeholder").fadeIn(1000);
       }
       $("#cmdLine").val("");
