@@ -1,18 +1,35 @@
 bug = false;
+hitpoints = 100;
 
 currentArea = "nBog"
 
 function comBat(){
       var bugHP = Math.random()*100;
+      $("<p>You attack the bug!</p>").insertBefore("#placeholder")
 
       var combat =  setInterval(function(){
                     if(bugHP > 0){
-                      var dmg = Math.floor(Math.random()*10+1);
-                      bugHP -= dmg
-                      $("<p>You strike the bug for "+dmg+" damage.</p>").insertBefore("#placeholder")
+                      var pdmg = Math.floor(Math.random()*20+1);
+                      var edmg = Math.floor(Math.random()*10+1);
+                      bugHP -= pdmg
+                      hitpoints -= edmg
+                      $("<p>You strike the bug for "+pdmg+" damage.</p>").insertBefore("#placeholder")
+                      $("#console").scrollTop($("#console")[0].scrollHeight);
+                      setTimeout(function(){
+                        if(bugHP > 0){
+                          $("<p>The bug bites your back for "+edmg+"!</p>").insertBefore("#placeholder")
+                          $("#console").scrollTop($("#console")[0].scrollHeight);
+                        }
+                        },1000)
+                    }
+                    else if(hitpoints <= 0){
+                        $("<p>YOU DIED</p>").insertBefore("#placeholder")
+                        $("#console").scrollTop($("#console")[0].scrollHeight);
+                        clearInterval(combat)
                     }
                     else{
                         $("<p>The bug has been defeated.</p>").insertBefore("#placeholder")
+                        $("#console").scrollTop($("#console")[0].scrollHeight);
                         clearInterval(combat);
                     }
 
@@ -53,6 +70,7 @@ $(document).ready(function(){
           $("<p>You cannot travel west from here.</p>").insertBefore("#placeholder")
       }
       else if(input =="attack bug"){
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           comBat()
       }
       else{
