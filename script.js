@@ -2,10 +2,14 @@ bug = false;
 
 currentArea = "nBog"
 
+
 $(document).ready(function(){
 
     $("form").submit(function(){
       var input = $("#cmdLine").val();
+
+      $("#console").scrollTop($("#console")[0].scrollHeight);
+
 
       if(input == "help"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
@@ -40,6 +44,8 @@ $(document).ready(function(){
 
       $("#cmdLine").val("");
 
+
+      $("#console").scrollTop($("#console")[0].scrollHeight);
     })
 
 });
