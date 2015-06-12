@@ -23,8 +23,6 @@ $(document).ready(function(){
       else if(input =="take bug" && currentArea != "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $("<p>You don't see a bug here.</p>").insertBefore("#placeholder")
-      else if(input == "take bug" && currentArea == "nBog"){
-          $("<p>The bug is in your hands.</p>").insertBefore("#placeholder").fadeIn(1000);
       }
       else if(input =="go west" && currentArea == "nBog"){
           currentArea = "wBog"
