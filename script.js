@@ -2,14 +2,28 @@ bug = false;
 
 currentArea = "nBog"
 
+function comBat(){
+      var bugHP = Math.random()*100;
+
+      var combat =  setInterval(function(){
+                    if(bugHP > 0){
+                      var dmg = Math.floor(Math.random()*10+1);
+                      bugHP -= dmg
+                      $("<p>You strike the bug for "+dmg+" damage.</p>").insertBefore("#placeholder")
+                    }
+                    else{
+                        $("<p>The bug has been defeated.</p>").insertBefore("#placeholder")
+                        clearInterval(combat);
+                    }
+
+                  }, 2000)
+}
+
 
 $(document).ready(function(){
 
     $("form").submit(function(){
-      var input = $("#cmdLine").val();
-      var input = input.toLowerCase()
-
-      $("#console").scrollTop($("#console")[0].scrollHeight);
+      var input = $("#cmdLine").val().toLowerCase();
 
 
       if(input == "help"){
@@ -37,6 +51,9 @@ $(document).ready(function(){
       else if(input =="go west" && currentArea != "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $("<p>You cannot travel west from here.</p>").insertBefore("#placeholder")
+      }
+      else if(input =="attack bug"){
+          comBat()
       }
       else{
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
