@@ -7,6 +7,7 @@ $(document).ready(function(){
 
     $("form").submit(function(){
       var input = $("#cmdLine").val();
+      var input = input.toLowerCase()
 
       $("#console").scrollTop($("#console")[0].scrollHeight);
 
