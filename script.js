@@ -20,9 +20,14 @@ $(document).ready(function(){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $("<p>You already have the bug.</p>").insertBefore("#placeholder")
       }
+<<<<<<< HEAD
       else if(input =="take bug" && currentArea != "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $("<p>You don't see a bug here.</p>").insertBefore("#placeholder")
+=======
+      else if(input == "take bug" && currentArea == "nBog"){
+          $("<p>The bug is in your hands.</p>").insertBefore("#placeholder").fadeIn(1000);
+>>>>>>> origin/gh-pages
       }
       else if(input =="go west" && currentArea == "nBog"){
           currentArea = "wBog"
