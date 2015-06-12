@@ -3,7 +3,6 @@ body{
 }
 
 #statwindow{
-  position:absolute;
   font-family: tahoma;
   border:2px solid grey;
   color: lime;
@@ -16,18 +15,16 @@ body{
 }
 
 #mainContainer{
+  position:absolute;
   font-family: tahoma;
   font-size:14px;
-  position:absolute;
-  top:20%;
   left:20%;
-  background-color: black;
+  top:20%;
 }
 
 
 #mainConsole{
   text-align:left;
-  background-color: black;
   height:400px;
   width:700px;
   overflow: auto;
@@ -38,9 +35,9 @@ body{
 }
 
 #combatContainer{
+  position:absolute;
   padding-left:4px;
   font-family: tahoma;
-  position: absolute;
   border:2px solid grey;
   height: 400px;
   width: 350px;
