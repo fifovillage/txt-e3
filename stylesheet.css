@@ -1,6 +1,32 @@
-#console {
+body{
+  background-color: black;
+}
 
-  height: 550px;
-  width: 500px;
+#container{
+  font-family: tahoma;
+  font-size:14px;
+  position:absolute;
+  top:20%;
+  left:25%;
+  background-color: black;
+}
+
+
+#console{
+  text-align:left;
+  background-color: black;
+  height:400px;
+  width:700px;
   overflow: auto;
+  color: white;
+  border: 2px solid grey;
+  margin-bottom: 5px;
+  padding-left:4px;
+}
+
+#cmdLine{
+  background-color:black;
+  color:lime;
+  outline:none;
+  border: 1px solid grey;
 }

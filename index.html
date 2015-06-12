@@ -8,23 +8,24 @@
   </head>
   <body>
 
-    <div id="console">
+    <div id="container">
+      <div id="console">
 
-      <p id="msgStart">Welcome to Bog Adventures.</p>
+        <p id="msgStart">Welcome to Bog Adventures.</p>
 
-      <p id="northArea">You're in the northern area of the bog. There is a bug.</p>
+        <p id="northArea">You're in the northern area of the bog. There is a bug.</p>
 
-      <p id="msgHelp" style="display:none">Here a list of commands.</p>
+        <p id="msgHelp" style="display:none">Here a list of commands.</p>
 
-      <!-- //////////////////// -->
 
-      <div id="placeholder"></div>
+        <div id="placeholder"></div>
 
+      </div>
+
+      <form onsubmit="return false;">
+        <input type="text" size="50" autofocus="autofocus" id="cmdLine">
+      </form>
     </div>
-
-    <form onsubmit="return false;">
-      <input type="text" size="50" autofocus="autofocus" id="cmdLine">
-    </form>
 
 <script src="script.js"></script>
   </body>
