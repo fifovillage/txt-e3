@@ -2,17 +2,30 @@ body{
   background-color: black;
 }
 
-#container{
+#statwindow{
+  position:absolute;
+  font-family: tahoma;
+  border:2px solid grey;
+  color: lime;
+  height:100px;
+  width:250px;
+}
+
+#statwindow p{
+  margin: 4px;
+}
+
+#mainContainer{
   font-family: tahoma;
   font-size:14px;
   position:absolute;
   top:20%;
-  left:25%;
+  left:20%;
   background-color: black;
 }
 
 
-#console{
+#mainConsole{
   text-align:left;
   background-color: black;
   height:400px;
@@ -24,9 +37,22 @@ body{
   padding-left:4px;
 }
 
+#combatContainer{
+  padding-left:4px;
+  font-family: tahoma;
+  position: absolute;
+  border:2px solid grey;
+  height: 400px;
+  width: 350px;
+  top: 20%;
+  left: 73%;
+  color:red;
+  overflow: auto;
+}
+
 #cmdLine{
   background-color:black;
-  color:lime;
+  color:white;
   outline:none;
   border: 1px solid grey;
 }

@@ -1,50 +1,73 @@
+hitpoints = 100
+mana = 20
+level = 1
+
 inventory = [10];
 
+
+
 bug = false;
-hitpoints = 100;
 
 currentArea = "nBog"
 
 
+function refreshStatWindow(){
+  $("#lvl").empty()
+  $("#hp").empty()
+  $("#mp").empty()
+  $("#xp").empty()
+
+  if(hitpoints < 0){
+      $("#hp").append(0)
+  }else{
+      $("#lvl").append("Level " + level)
+      $("#hp").append("Health: "+hitpoints)
+      $("#mp").append("Mana: "+mana)
+      $("#xp").append("Exp: ")
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function comBat(hp, enemy){
 
-      $("<p>You attack the"+enemy+"!</p>").insertBefore("#placeholder")
+      $("<p>You attack the "+enemy+"!</p>").insertBefore("#Bplaceholder")
       var enemyHP = hp
       var combat =  setInterval(function(){
                       var pdmg = Math.floor(Math.random()*20+1);
                       var edmg = Math.floor(Math.random()*15+1);
-                      enemyHP -= pdmg
-                      hitpoints -= edmg
-                      $("<p>You strike the "+enemy+" for "+pdmg+" damage.</p>").insertBefore("#placeholder")
-                      $("#console").scrollTop($("#console")[0].scrollHeight)
                       if(hitpoints <= 0){
-                          $("<p>The bug bites your back for "+edmg+"!</p>").insertBefore("#placeholder")
                           $("<p>YOU DIED</p>").insertBefore("#placeholder")
-                          $("#console").scrollTop($("#console")[0].scrollHeight)
+                          $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
                           clearInterval(combat)
                       }else if(enemyHP <= 0){
-                          $("<p>The "+enemy+" has been defeated. It is dead on the ground.</p>").insertBefore("#placeholder")
-                          $("#console").scrollTop($("#console")[0].scrollHeight)
+                          $("<p>The "+enemy+" has been defeated. It is dead on the ground.</p>").insertBefore("#Bplaceholder")
+                          $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                           bug = true;
                         clearInterval(combat)
                       }else if(enemyHP > 0){
+                          enemyHP -= pdmg
+                          $("<p>You strike the "+enemy+" for "+pdmg+" damage.</p>").insertBefore("#Bplaceholder")
+                          $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                           setTimeout(function(){
-                              $("<p>The "+enemy+" bites your back for "+edmg+"!</p>").insertBefore("#placeholder")
-                              $("#console").scrollTop($("#console")[0].scrollHeight)
+                              hitpoints -= edmg
+                              $("<p>The "+enemy+" bites your back for "+edmg+"!</p>").insertBefore("#Bplaceholder")
+                              $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                           },1000)
                       }
                   }, 2000)
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function(){
+setInterval(refreshStatWindow, 100)
+
 
     $("form").submit(function(){
       var input = $("#cmdLine").val().toLowerCase();
 
-      if(input == "hitpoints"){
-        $("<p>"+hitpoints+"</p>").insertBefore("#placeholder")
-      }
 
       if(hitpoints > 0){
 
@@ -55,8 +78,13 @@ $(document).ready(function(){
         ///////////////////northern bog bug conditions
         else if(input == "take bug" && currentArea == "nBog" && bug == false){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
-            hitpoints -= 5
+            if(hitpoints <= 5){
+              $("<p>One more time and that bug will kill you.</p>").insertBefore("#placeholder")
+
+            }else{
+              $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
+              hitpoints -= 5
+            }
         }
         else if(input == "take bug" && currentArea == "nBog" && bug == true){
 
@@ -104,7 +132,7 @@ $(document).ready(function(){
       $("#cmdLine").val("");
 
 
-      $("#console").scrollTop($("#console")[0].scrollHeight);
+      $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight);
     })
 
 });
