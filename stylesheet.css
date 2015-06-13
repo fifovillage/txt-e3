@@ -5,7 +5,6 @@ body{
 #statwindow{
   font-family: tahoma;
   border:2px solid grey;
-  color: lime;
   height:100px;
   width:250px;
 }

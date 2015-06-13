@@ -1,11 +1,11 @@
-player = {
+player    = {
        level: 1,
        hitpoints:100,
        mana:20,
        experience:0
 }
 
-reqXP = [
+reqXP     = [
        120,
        290,
        445,
@@ -22,15 +22,24 @@ inventory = [];
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//bog variables
 
+bug = false;
 
-bogEnemy = [
-        {name:"bug", health:75, exp:15},
+bogEnemy    = [
+        {name:"bug", health  :75, exp :15},
         {name:"snake", health:100, exp:20},
-        {name:"crab", health:150, exp:30}]
+        {name:"crab", health :150, exp:30}]
 
+bogItem = [
+        {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35, description:"Could be used as a crude weapon."},
+        {slot:"none", name:"Dead Bug", healing:20, description:"Eat this to restore a small amount of health."}
+]
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 currentArea = "nBog"
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,12 +50,15 @@ function refreshStatWindow(){
   $("#xp").empty()
 
   if(player.hitpoints < 0){
-      $("#hp").append(0)
+      $("#lvl").append("Level YOU DIED")
+      $("#hp").append("Health: YOU DIED")
+      $("#mp").append("Mana  : YOU DIED")
+      $("#xp").append("Exp   : NONE YOU DIED")
   }else{
       $("#lvl").append("Level " +player.level)
       $("#hp").append("Health: "+player.hitpoints)
-      $("#mp").append("Mana: "+player.mana)
-      $("#xp").append("Exp: "+player.experience+" / "+reqXP[player.level - 1])
+      $("#mp").append("Mana  : "+player.mana)
+      $("#xp").append("Exp   : "+player.experience+" / "+reqXP[player.level - 1])
   }
 }
 
@@ -96,24 +108,46 @@ setInterval(refreshStatWindow, 100)
         if(input == "help"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("#msgHelp").clone().insertBefore("#placeholder").fadeIn(0)
+///////////////////////////////////////INVENTORY COMMANDS
+        }else if(input =="inventory"){
+            if(inventory.length > 0){
+              for(var i = 0; i < inventory.length; i++){
+                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"<br>---------"+inventory[i].description+"<br><br></p>").insertBefore("#placeholder")
+              }
+            }else{
+              $("<p>Your bag is empty.</p>").insertBefore("#placeholder")
+            }
+        }else if((input =="use dead bug" || input =="use bug") && inventory.indexOf(bogItem[1]) > -1){
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+          $("<p>You eat the dead bug and restore "+inventory[inventory.indexOf(bogItem[1])].healing+" health. Yucky.</p>").insertBefore("#placeholder")
+          inventory.splice(inventory.indexOf(bogItem[1]), 1)
         }
-        ///////////////////northern bog bug conditions
-        else if(input == "take bug" && currentArea == "nBog" && bug == false){
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            if(player.hitpoints <= 5){
+///////////////////////////////////NORTHERN BOG CONDITIONS
+        else if(input == "take bug" && currentArea == "nBog"){
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+
+            if(player.hitpoints <= 5 && bug == false){
               $("<p>One more time and that bug will kill you.</p>").insertBefore("#placeholder")
 
-            }else{
+            }else if(bug == false){
               $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
               player.hitpoints -= 5
+            }else if(bug == true && inventory.indexOf(bogItem[1]) == -1){
+              $("<p>You pick up the bug from the bog and place it in your bag.</p>").insertBefore("#placeholder")
+              inventory.push(bogItem[1])
+            }else if(bug == true && inventory.indexOf(bogItem[1]) > -1){
+              $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
             }
+        }else if(input =="attack bug" && currentArea == "nBog" && bug == false){
+          $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
+          bug = true;
         }
-        //////////////////////////////////////////////////////////////////////////////////////////////
+
         else if(input =="go west" && currentArea == "nBog"){
             var randEnc = (Math.random() * 10 + 2)
             currentArea = "wBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>You are now in the west bog.</p>").insertBefore("#placeholder")
+            $("<p>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>").insertBefore("#placeholder")
 
               if(randEnc > 5){
                 var rand = Math.floor(Math.random()* 3)
@@ -121,6 +155,8 @@ setInterval(refreshStatWindow, 100)
                 comBat(bogEnemy[rand].health, bogEnemy[rand].name, bogEnemy[rand].exp)
               }
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //WESTERN BOG CONDITIONS
         else if(input =="go west" && currentArea == "wBog"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>You cannot travel west from here.</p>").insertBefore("#placeholder")
