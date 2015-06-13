@@ -20,20 +20,23 @@ reqXP     = [
 
 inventory = [];
 
+equipment = [
+        {weapon:"none"}
+]
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //bog variables
 
-bug = false
-exsod = false
+bug       = false
+exsod     = false
 
-bogEnemy    = [
+bogEnemy  = [
         {name:"bug", health  :75, exp :15},
         {name:"snake", health:100, exp:20},
         {name:"crab", health :150, exp:30}]
 
-bogItem = [
-        {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35, description:"Could be used as a crude weapon."},
+bogItem   = [
+        {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay       :35, description:"Could be used as a crude weapon."},
         {slot:"none", name:"Dead Bug", healing:20, description:"Eat this to restore a small amount of health."}
 ]
 
@@ -73,8 +76,14 @@ function comBat(hp, enemy, exp){
       $("<p>You attack the "+enemy+"!</p>").insertBefore("#Bplaceholder")
       var enemyHP = hp
       var combat =  setInterval(function(){
-                      var pdmg = Math.floor(Math.random()*20+1);
+                      if(equipment.weapon = "none"){
+                        var pdmg = Math.floor(Math.random()*20+1)
+                      }else{
+                        var pdmg = Math.floor(Math.random()*(equipment.weapon.damage*10)+1)
+                      }
+
                       var edmg = Math.floor(Math.random()*15+1);
+
                       if(player.hitpoints <= 0){
                           $("<p>YOU DIED</p>").insertBefore("#placeholder")
                           $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
@@ -130,6 +139,8 @@ setInterval(refreshStatWindow, 100)
           }
           $("<p>You eat the dead bug and restore "+inventory[inventory.indexOf(bogItem[1])].healing+" health. Yucky.</p>").insertBefore("#placeholder")
           inventory.splice(inventory.indexOf(bogItem[1]), 1)
+        }else if((input =="equip leg" || input =="equip bug leg") && inventory.indexOf(bogItem[0] > -1)){
+            equipment.weapon = bogItem[0]
         }
 ///////////////////////////////////NORTHERN BOG CONDITIONS
         else if(input == "take bug" && currentArea == "nBog"){
@@ -169,12 +180,17 @@ setInterval(refreshStatWindow, 100)
         else if(input =="go west" && currentArea == "wBog"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>You cannot travel west from here.</p>").insertBefore("#placeholder")
-        }else if(input =="examine sod" && currentArea == "wBog" && exsod == false){
+        }else if(input =="examine sod" && currentArea == "wBog"){
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>Here lays a fallen bug, its legs worn down to a crude edge by the waters of the bog and the passage of time. You may be able to use one of the legs as an improvised bog bug weapon.</p>").insertBefore("#placeholder")
             exsod = true
-        }else if((input =="take leg" || input =="take bug leg") && exsod == true){
+        }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) == -1){
             inventory.push(bogItem[0])
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>You place the bog bug's leg into your bag.</p>").insertBefore("#placeholder")
+        }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) > -1){
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+            $("<p>You already have the bug's only salvageable leg.</p>").insertBefore("#placeholder")
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////
         else if(player.hitpoints <= 0){
