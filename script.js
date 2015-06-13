@@ -1,6 +1,6 @@
 player    = {
        level: 1,
-       hitpoints:100,
+       hitpoints:242,
        mana:20,
        experience:0
 }
@@ -24,7 +24,8 @@ inventory = [];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //bog variables
 
-bug = false;
+bug = false
+exsod = false
 
 bogEnemy    = [
         {name:"bug", health  :75, exp :15},
@@ -44,6 +45,8 @@ currentArea = "nBog"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function refreshStatWindow(){
+  maxHP = reqXP[player.level-1] * (player.level + 1) ^2
+
   $("#lvl").empty()
   $("#hp").empty()
   $("#mp").empty()
@@ -56,7 +59,7 @@ function refreshStatWindow(){
       $("#xp").append("Exp   : NONE YOU DIED")
   }else{
       $("#lvl").append("Level " +player.level)
-      $("#hp").append("Health: "+player.hitpoints)
+      $("#hp").append("Health: "+player.hitpoints+" / "+maxHP)
       $("#mp").append("Mana  : "+player.mana)
       $("#xp").append("Exp   : "+player.experience+" / "+reqXP[player.level - 1])
   }
@@ -119,6 +122,12 @@ setInterval(refreshStatWindow, 100)
             }
         }else if((input =="use dead bug" || input =="use bug") && inventory.indexOf(bogItem[1]) > -1){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+          if(player.hitpoints < maxHP){
+              player.hitpoints += bogItem[1].healing
+              if(player.hitpoints > maxHP){
+                  player.hitpoints = maxHP
+              }
+          }
           $("<p>You eat the dead bug and restore "+inventory[inventory.indexOf(bogItem[1])].healing+" health. Yucky.</p>").insertBefore("#placeholder")
           inventory.splice(inventory.indexOf(bogItem[1]), 1)
         }
@@ -160,8 +169,15 @@ setInterval(refreshStatWindow, 100)
         else if(input =="go west" && currentArea == "wBog"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>You cannot travel west from here.</p>").insertBefore("#placeholder")
+        }else if(input =="examine sod" && currentArea == "wBog" && exsod == false){
+            $("<p>Here lays a fallen bug, its legs worn down to a crude edge by the waters of the bog and the passage of time. You may be able to use one of the legs as an improvised bog bug weapon.</p>").insertBefore("#placeholder")
+            exsod = true
+        }else if((input =="take leg" || input =="take bug leg") && exsod == true){
+            inventory.push(bogItem[0])
+            $("<p>You place the bog bug's leg into your bag.</p>").insertBefore("#placeholder")
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        }else if(player.hitpoints <= 0){
+        else if(player.hitpoints <= 0){
             $("<p>YOU DEAD</p>").insertBefore("#placeholder")
         }
         else{
