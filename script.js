@@ -1,4 +1,4 @@
-////////
+////////////////////////////////////////////////////////////////////////////////
 // initial zone info
 var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>"
 var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
@@ -16,7 +16,7 @@ var bugHiveInfo = "<p>[Bug Hive]<br></p>"
 var bugDenInfo = "<p>[Bug Den]<br></p>"
 
 
-/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // initial variables
 
 var inCombat = false
@@ -69,8 +69,12 @@ var bogItem   = [
 ///////////////////////////////////////////////////////////////////////////
 // cave variables
 
+//cave bestiary
+var caveEnemy = []
 
-////////////////////////////////////////////////////////////////////////////////
+//cave item list
+var caveItem = []
+
 ////////////////////////////////////////////////////////////////////////////////
 //random encounter section
 
