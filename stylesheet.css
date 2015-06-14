@@ -4,6 +4,7 @@ body{
 
 #statwindow{
   font-family: tahoma;
+  font-size: 100%;
   width: 200px;
 }
 
@@ -16,7 +17,7 @@ body{
   height:50%;
   width:50%;
   font-family: tahoma;
-  font-size:14px;
+  font-size:100%;
   left:20%;
   top:20%;
 }
