@@ -18,7 +18,8 @@ player    = {
        level: 1,
        hitpoints:242,
        mana:20,
-       experience:0
+       experience:0,
+       currency: 0
 }
 
 reqXP     = [
@@ -69,17 +70,20 @@ function refreshStatWindow(){
   $("#hp").empty()
   $("#mp").empty()
   $("#xp").empty()
+  $("#currency").empty()
 
   if(player.hitpoints < 0){
       $("#lvl").append("Level YOU DIED")
       $("#hp").append("Health: YOU DIED")
       $("#mp").append("Mana  : YOU DIED")
       $("#xp").append("Exp   : NONE YOU DIED")
+      $("#currency").append("Bill Fold   : AI'NT 'NAM")
   }else{
       $("#lvl").append("Level " +player.level)
       $("#hp").append("Health: "+player.hitpoints+" / "+maxHP)
       $("#mp").append("Mana  : "+player.mana)
       $("#xp").append("Exp   : "+player.experience+" / "+reqXP[player.level - 1])
+      $("#currency").append("Bill Fold   : "+player.currency)
   }
 }
 
