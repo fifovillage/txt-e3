@@ -19,7 +19,7 @@ var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the rams
 var inCombat = false
 var currentArea = "nBog"
 
-player    = {
+var player    = {
        level: 1,
        hitpoints:242,
        mana:20,
@@ -27,7 +27,7 @@ player    = {
        currency: 0
 }
 
-reqXP     = [
+var reqXP     = [
        120,
        290,
        445,
@@ -40,23 +40,25 @@ reqXP     = [
        3500
 ]
 
-inventory = [];
+var inventory = [];
 
-equipment = {weapon:"unarmed"}
+var equipment = {weapon:"unarmed"}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //bog variables
 
-bug       = false
-exsod     = false
+var bug       = false
+var exsod     = false
 
-bogEnemy  = [
+// bog bestiary
+var bogEnemy  = [
         {name:"bug", health  :75, damage:1, delay:20, exp :15},
         {name:"snake", health:100, damage:2, delay:25, exp:20},
         {name:"crab", health :150, damage:5, delay:50, exp:30}]
 
-bogItem   = [
+// bog item list
+var bogItem   = [
         {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35, description:"Could be used as a crude weapon."},
         {slot:"none", name:"Dead Bug", healing:20, description:"Eat this to restore a small amount of health."}
 ]
