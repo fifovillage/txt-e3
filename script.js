@@ -1,18 +1,23 @@
 ////////
-// zones
-// nBog
+// initial zone info
+var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>"
 // eBogCoast
 // eBog
 // cBog
+var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
 // wBog
-// wBogCoast
-// houseFront
+var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
 // house
 // bogCamp
 // caveEntrance
 // bugLair
 // bugHive
+
+
+/////////////////////////////
+// initial variables
 var inCombat = false
+var currentArea = "nBog"
 
 player    = {
        level: 1,
@@ -57,9 +62,6 @@ bogItem   = [
 ]
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//set current area for beginning
-currentArea = "nBog"
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //random encounter section
 
 //bog random encounter
@@ -72,7 +74,11 @@ function randomEncounterBog(){
   }
 }
 
-function randomEncounterCave(){}
+//cave random encounter
+function randomEncounterCave(){
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //stat window refresh
 function refreshStatWindow(){
@@ -217,12 +223,16 @@ setInterval(refreshStatWindow, 100)
           $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
           bug = true;
 
+        }else if(input =="look" && currentArea == "nBog"){
+          $(nBogInfo).insertBefore("#placeholder")
+          bug = true;
+
 //movement: northern bog
+
         }else if((input =="west" || input =="w") && currentArea == "nBog"){
-            var randEnc = (Math.random() * 10 + 2)
             currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>").insertBefore("#placeholder")
+            $(wBogCoastInfo).insertBefore("#placeholder")
             randomEncounterBog()
 
         }else if((input =="east" || input =="e") && currentArea == "nBog"){
@@ -245,7 +255,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="west" || input=="w") && currentArea == "eBogCoast"){
                   currentArea = "nBog"
                   $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                  $("<p>Arrive to north bog from east bog coast.</p>").insertBefore("#placeholder")
+                  $(nBogInfo).insertBefore("#placeholder")
                   randomEncounterBog()
               }
             else if((input =="south" || input=="s") && currentArea == "eBogCoast"){
@@ -292,12 +302,12 @@ setInterval(refreshStatWindow, 100)
   else if((input =="west" || input=="w") && currentArea == "wBogCoast"){
             currentArea = "houseFront"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>In front of you stands the ramshackle hut you and your mother call home.</p>").insertBefore("#placeholder")
+            $(houseFrontInfo).insertBefore("#placeholder")
         }
   else if((input =="east" || input=="e") && currentArea == "wBogCoast"){
         currentArea = "nBog"
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $("<p>Travelin from wBogCoast to nBog</p>").insertBefore("#placeholder")
+          $(nBogInfo).insertBefore("#placeholder")
           randomEncounterBog()
         }
     else if((input =="south" || input=="s") && currentArea == "wBogCoast"){
@@ -321,7 +331,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="east" || input=="e") && currentArea == "houseFront"){
           currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Travelin from houseFront to wBogCoast</p>").insertBefore("#placeholder")
+            $(wBogCoastInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
 
@@ -334,7 +344,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="east" || input=="e") && currentArea == "house"){
           currentArea = "houseFront"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from house to houseFront</p>").insertBefore("#placeholder")
+            $(houseFrontInfo).insertBefore("#placeholder")
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,7 +361,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="north" || input=="n") && currentArea == "wBog"){
           currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from house to houseFront</p>").insertBefore("#placeholder")
+            $(wBogCoastInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
 
@@ -365,7 +375,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="north" || input=="n") && currentArea == "cBog"){
           currentArea = "nBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from cBog to nBog</p>").insertBefore("#placeholder")
+            $(nBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="south" || input=="s") && currentArea == "cBog"){
@@ -414,7 +424,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="north" || input=="n") && currentArea == "bogCamp"){
           currentArea = "sBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from cBog to nBog</p>").insertBefore("#placeholder")
+            $("<p>Traveling from bogCamp to sBog</p>").insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="east" || input=="e") && currentArea == "bogCamp"){
