@@ -1,17 +1,18 @@
 ////////
 // initial zone info
 var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>"
-// eBogCoast
-// eBog
-// cBog
+var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
+var eBogInfo  = "<p>[Eastern Bog]<br></p>"
+var cBogInfo  = "<p>[Central Bog]<br></p>"
 var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
-// wBog
+var wBogInfo = "<p>[Western Bog]<br></p>"
 var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
-// house
-// bogCamp
-// caveEntrance
-// bugLair
-// bugHive
+var houseInfo = "<p>[Shack]<br></p>"
+var bogCampInfo = "<p>[Bog Camp]<br></p>"
+var caveEntranceInfo = "[<p>[Cave Entrance]<br></p>"
+var bugLairInfo = "<p>[Bug Lair]<br></p>"
+var bugHiveInfo = "<p>[Bug Hive]<br></p>"
+var bugDenInfo = "<p>[Bug Den]<br></p>"
 
 
 /////////////////////////////
@@ -45,7 +46,7 @@ var inventory = [];
 var equipment = {weapon:"unarmed"}
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //bog variables
 
 var bug       = false
@@ -63,7 +64,12 @@ var bogItem   = [
         {slot:"none", name:"Dead Bug", healing:20, description:"Eat this to restore a small amount of health."}
 ]
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+// cave variables
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //random encounter section
 
 //bog random encounter
@@ -81,7 +87,7 @@ function randomEncounterCave(){
 
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //stat window refresh
 function refreshStatWindow(){
   maxHP = reqXP[player.level-1] * (player.level + 1) ^2
@@ -108,7 +114,7 @@ function refreshStatWindow(){
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // da combat code
 function comBat(enemy){
       inCombat = true
@@ -133,7 +139,7 @@ function comBat(enemy){
 
       }, enemy.delay * 100)
 
-//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
       var player_combat =  setInterval(function(){
 
@@ -166,8 +172,9 @@ function comBat(enemy){
        }, delay)
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // input section
+
 $(document).ready(function(){
 setInterval(refreshStatWindow, 100)
 
@@ -181,7 +188,9 @@ setInterval(refreshStatWindow, 100)
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("#msgHelp").clone().insertBefore("#placeholder").fadeIn(0)
 
-///////////////////////////////////////INVENTORY COMMANDS
+////////////////////////////////////////////////////////////////////////////////
+//INVENTORY COMMANDS
+
         }else if(input =="inventory"){
             if(inventory.length > 0){
               for(var i = 0; i < inventory.length; i++){
@@ -204,7 +213,7 @@ setInterval(refreshStatWindow, 100)
             equipment.weapon = bogItem[0]
         }
 
-///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // NORTHERN BOG CONDITIONS[nBog]
         else if(input == "take bug" && currentArea == "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
@@ -240,17 +249,17 @@ setInterval(refreshStatWindow, 100)
         }else if((input =="east" || input =="e") && currentArea == "nBog"){
             currentArea = "eBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>You pop a wheelie from the northern bog coast into the eastern bog coast.</p>").insertBefore("#placeholder")
+            $(eBogCoastInfo).insertBefore("#placeholder")
             randomEncounterBog()
 
         }else if((input =="south" || input =="s") && currentArea == "nBog"){
             currentArea = "cBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>nBog to cBog</p>").insertBefore("#placeholder")
+            $(cBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //EASTERN BOG COAST CONDITIONS [eBogCoast]
 
 //movement from eBogCoast
@@ -263,28 +272,28 @@ setInterval(refreshStatWindow, 100)
             else if((input =="south" || input=="s") && currentArea == "eBogCoast"){
                 currentArea = "eBog"
                 $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                $("<p>Arrive to east bog from east bog coast.</p>").insertBefore("#placeholder")
+                $(eBogInfo).insertBefore("#placeholder")
                 randomEncounterBog()
             }
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //EASTERN BOG CONDITIONS [eBog]
 
 //movement from eBog
         else if((input =="north" || input=="n") && currentArea == "eBog"){
                   currentArea = "eBogCoast"
                   $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                  $("<p>Arrive to ebogcoast from east bog.</p>").insertBefore("#placeholder")
+                  $(eBogCoastInfo).insertBefore("#placeholder")
                   randomEncounterBog()
               }
             else if((input =="west" || input=="w") && currentArea == "eBog"){
                 currentArea = "cBog"
                 $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                $("<p>Arrive to cbog from east bog.</p>").insertBefore("#placeholder")
+                $(cBogInfo).insertBefore("#placeholder")
                 randomEncounterBog()
             }
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //WESTERN BOG COAST CONDITIONS [wBogCoast]
 
         else if(input =="examine sod" && currentArea == "wBogCoast"){
@@ -315,12 +324,12 @@ setInterval(refreshStatWindow, 100)
     else if((input =="south" || input=="s") && currentArea == "wBogCoast"){
         currentArea = "wBog"
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $("<p>Travelin from wBogCoast to wBog</p>").insertBefore("#placeholder")
+          $(wBogInfo).insertBefore("#placeholder")
           randomEncounterBog()
         }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //FRONT OF HOUSE CONDITIONS [houseFront]
 
 
@@ -328,7 +337,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="west" || input=="w") && currentArea == "houseFront"){
           currentArea = "house"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Travelin from houseFront to house</p>").insertBefore("#placeholder")
+            $(houseInfo).insertBefore("#placeholder")
         }
         else if((input =="east" || input=="e") && currentArea == "houseFront"){
           currentArea = "wBogCoast"
@@ -337,8 +346,8 @@ setInterval(refreshStatWindow, 100)
             randomEncounterBog()
         }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // MAMA HOUSE CONDITIONS [house]
 
 
@@ -348,8 +357,8 @@ setInterval(refreshStatWindow, 100)
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(houseFrontInfo).insertBefore("#placeholder")
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // WEST BOG CONDITIONS [wBog]
 
 
@@ -357,7 +366,7 @@ setInterval(refreshStatWindow, 100)
         else if((input =="east" || input=="e") && currentArea == "wBog"){
           currentArea = "cBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from wBog to cBog</p>").insertBefore("#placeholder")
+            $(cBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="north" || input=="n") && currentArea == "wBog"){
@@ -367,9 +376,9 @@ setInterval(refreshStatWindow, 100)
             randomEncounterBog()
         }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // CENTRAL BOG CONDITIONS [cBog]
 
 
@@ -383,24 +392,24 @@ setInterval(refreshStatWindow, 100)
         else if((input =="south" || input=="s") && currentArea == "cBog"){
           currentArea = "sBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from cBog to sBog</p>").insertBefore("#placeholder")
+            $(sBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="east" || input=="e") && currentArea == "cBog"){
           currentArea = "eBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from Cbog to ebog</p>").insertBefore("#placeholder")
+            $(eBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="west" || input=="w") && currentArea == "cBog"){
           currentArea = "wBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from cbog to wbog</p>").insertBefore("#placeholder")
+            $(wBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // SOUTH BOG CONDITIONS [sBog]
 
 
@@ -408,17 +417,17 @@ setInterval(refreshStatWindow, 100)
         else if((input =="north" || input=="n") && currentArea == "sBog"){
           currentArea = "cBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from sbog to cBog</p>").insertBefore("#placeholder")
+            $(cBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="south" || input=="s") && currentArea == "sBog"){
           currentArea = "bogCamp"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from cBog to bogCamp</p>").insertBefore("#placeholder")
+            $(bogCampInfo).insertBefore("#placeholder")
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // BOG CAMP CONDITIONS [bogCamp]
 
 
@@ -426,17 +435,17 @@ setInterval(refreshStatWindow, 100)
         else if((input =="north" || input=="n") && currentArea == "bogCamp"){
           currentArea = "sBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from bogCamp to sBog</p>").insertBefore("#placeholder")
+            $(sBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
         else if((input =="east" || input=="e") && currentArea == "bogCamp"){
           currentArea = "caveEntrance"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from bogcamp to caveWntrANCe</p>").insertBefore("#placeholder")
+            $(caveEntranceInfo).insertBefore("#placeholder")
         }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // CAVE ENTRANCE CONDITIONS [caveEntrance]
 
 
@@ -444,15 +453,15 @@ setInterval(refreshStatWindow, 100)
         else if((input =="west" || input=="w") && currentArea == "caveEntrance"){
           currentArea = "bogCamp"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from cave entrance to bogo camp</p>").insertBefore("#placeholder")
+            $(bogCampInfo).insertBefore("#placeholder")
         }
         else if((input =="east" || input=="e") && currentArea == "caveEntrance"){
           currentArea = "bugLair"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from caveEntrance to bugLair</p>").insertBefore("#placeholder")
+            $(bugLairInfo).insertBefore("#placeholder")
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // BUG LAIR CONDITIONS [bugLair]
 
 
@@ -460,15 +469,15 @@ setInterval(refreshStatWindow, 100)
         else if((input =="west" || input=="w") && currentArea == "bugLair"){
           currentArea = "caveEntrance"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from bug lair to cave entrance</p>").insertBefore("#placeholder")
+            $(caveEntranceInfo).insertBefore("#placeholder")
         }
         else if((input =="east" || input=="e") && currentArea == "bugLair"){
           currentArea = "bugDen"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from buglair to bugden</p>").insertBefore("#placeholder")
+            $(bugDenInfo).insertBefore("#placeholder")
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // BUG DEN CONDITIONS [bugDen]
 
 
@@ -476,15 +485,15 @@ setInterval(refreshStatWindow, 100)
         else if((input =="east" || input=="e") && currentArea == "bugDen"){
           currentArea = "bugHive"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from bug den to bug hive</p>").insertBefore("#placeholder")
+            $(bugHiveInfo).insertBefore("#placeholder")
         }
         else if((input =="west" || input=="w") && currentArea == "bugDen"){
           currentArea = "bugLair"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from bugden to buglair</p>").insertBefore("#placeholder")
+            $(bugLairInfo).insertBefore("#placeholder")
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // BUG HIVE CONDITIONS [bugHive]
 
 
@@ -492,24 +501,26 @@ setInterval(refreshStatWindow, 100)
         else if((input =="west" || input=="w") && currentArea == "bugHive"){
           currentArea = "bugDen"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Traveling from caveEntrance to bugLair</p>").insertBefore("#placeholder")
+            $(bugDenInfo).insertBefore("#placeholder")
         }
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-
-
+// death condition
         else if(player.hitpoints <= 0){
             $("<p>YOU DEAD</p>").insertBefore("#placeholder")
         }
+
+// wrong command condition
         else{
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>I don't understand "+input+".</p>").insertBefore("#placeholder")
         }
       }
 
+//empty out the command line
       $("#cmdLine").val("");
 
-
+//scroll to the bottom
       $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight);
     })
 
