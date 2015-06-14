@@ -4,8 +4,8 @@ body{
 
 #statwindow{
   font-family: tahoma;
-  font-size: 95%;
   width: 200px;
+  line-height: 15px;
 }
 
 #statwindow p{
