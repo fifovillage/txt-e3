@@ -39,7 +39,7 @@ body{
   padding-left:4px;
   font-family: tahoma;
   border:2px solid rgba(100,100,100,.5);
-  height: 50%;
+  height:62.5%;
   width: 25%;
   top: 20%;
   left: 73%;
@@ -49,6 +49,7 @@ body{
 
 #cmdLine{
   background-color:black;
+  width: 101%;
   color:white;
   outline:none;
   border: 1px solid rgba(100,100,100,.5);
