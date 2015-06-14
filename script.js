@@ -89,7 +89,7 @@ function randomEncounterCave(){
 
 }
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //stat window refresh
 function refreshStatWindow(){
   maxHP = reqXP[player.level-1] * (player.level + 1) ^2
@@ -505,7 +505,6 @@ setInterval(refreshStatWindow, 100)
             $(bugDenInfo).insertBefore("#placeholder")
         }
 ////////////////////////////////////////////////////////////////////////////////
-
 // death condition
         else if(player.hitpoints <= 0){
             $("<p>YOU DEAD</p>").insertBefore("#placeholder")
