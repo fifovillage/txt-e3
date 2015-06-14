@@ -92,7 +92,6 @@ function randomEncounterBog(){
 function randomEncounterCave(){
 
 }
-
 ///////////////////////////////////////////////////////////////////////////////
 //stat window refresh
 function refreshStatWindow(){
@@ -118,8 +117,6 @@ function refreshStatWindow(){
       $("#currency").append("Bill Fold: "+player.currency)
   }
 }
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // da combat code
 function comBat(enemy){
