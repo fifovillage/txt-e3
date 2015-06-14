@@ -5,7 +5,6 @@ body{
 #statwindow{
   font-family: tahoma;
   width: 200px;
-  line-height: 15px;
 }
 
 #statwindow p{
@@ -17,7 +16,7 @@ body{
   height:50%;
   width:50%;
   font-family: tahoma;
-  font-size:100%;
+  font-size:95%;
   left:20%;
   top:20%;
 }
