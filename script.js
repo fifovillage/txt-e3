@@ -91,7 +91,7 @@ function comBat(enemy){
 
       }, enemy.delay * 100)
 
-------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
       var player_combat =  setInterval(function(){
 
@@ -177,7 +177,7 @@ setInterval(refreshStatWindow, 100)
         }else if(input =="attack bug" && currentArea == "nBog" && bug == false){
           $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
           bug = true;
-        }else if(input =="west" || input =="w" && currentArea == "nBog"){
+        }else if((input =="west" || input =="w") && currentArea == "nBog"){
             var randEnc = (Math.random() * 10 + 2)
             currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
@@ -203,7 +203,7 @@ setInterval(refreshStatWindow, 100)
         }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) > -1){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>You already have the bug's only salvageable leg.</p>").insertBefore("#placeholder")
-        }else if(input =="west" || input=="w" && currentArea == "wBogCoast"){
+        }else if((input =="west" || input=="w") && currentArea == "wBogCoast"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>In front of you stands the ramshackle hut you and your mother call home.</p>").insertBefore("#placeholder")
         }
