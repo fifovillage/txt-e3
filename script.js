@@ -4,6 +4,7 @@ var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the b
 var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
 var eBogInfo  = "<p>[Eastern Bog]<br></p>"
 var cBogInfo  = "<p>[Central Bog]<br></p>"
+var sBogInfo  = "<p>[Southern Bog]<br></p>"
 var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
 var wBogInfo = "<p>[Western Bog]<br></p>"
 var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
@@ -17,6 +18,7 @@ var bugDenInfo = "<p>[Bug Den]<br></p>"
 
 /////////////////////////////
 // initial variables
+
 var inCombat = false
 var currentArea = "nBog"
 
@@ -101,15 +103,15 @@ function refreshStatWindow(){
   if(player.hitpoints < 0){
       $("#lvl").append("Level YOU DIED")
       $("#hp").append("Health: YOU DIED")
-      $("#mp").append("Mana  : YOU DIED")
-      $("#xp").append("Exp   : NONE YOU DIED")
-      $("#currency").append("Bill Fold   : AI'NT 'NAM")
+      $("#mp").append("Mana: YOU DIED")
+      $("#xp").append("Exp: NONE YOU DIED")
+      $("#currency").append("Bill Fold: AI'NT NAM")
   }else{
       $("#lvl").append("Level " +player.level)
       $("#hp").append("Health: "+player.hitpoints+" / "+maxHP)
-      $("#mp").append("Mana  : "+player.mana)
-      $("#xp").append("Exp   : "+player.experience+" / "+reqXP[player.level - 1])
-      $("#currency").append("Bill Fold   : "+player.currency)
+      $("#mp").append("Mana: "+player.mana)
+      $("#xp").append("Exp: "+player.experience+" / "+reqXP[player.level - 1])
+      $("#currency").append("Bill Fold: "+player.currency)
   }
 }
 
@@ -236,7 +238,6 @@ setInterval(refreshStatWindow, 100)
 
         }else if(input =="look" && currentArea == "nBog"){
           $(nBogInfo).insertBefore("#placeholder")
-          bug = true;
 
 //movement: northern bog
 
