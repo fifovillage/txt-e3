@@ -20,9 +20,8 @@ reqXP     = [
 
 inventory = [];
 
-equipment = [
-        {weapon:"none"}
-]
+equipment = {weapon:"unarmed"}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //bog variables
@@ -31,9 +30,9 @@ bug       = false
 exsod     = false
 
 bogEnemy  = [
-        {name:"bug", health  :75, exp :15},
-        {name:"snake", health:100, exp:20},
-        {name:"crab", health :150, exp:30}]
+        {name:"bug", health  :75, damage:1, delay:20, exp :15},
+        {name:"snake", health:100, damage:2, delay:25, exp:20},
+        {name:"crab", health :150, damage:5, delay:50, exp:30}]
 
 bogItem   = [
         {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35, description:"Could be used as a crude weapon."},
@@ -72,38 +71,53 @@ function refreshStatWindow(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function comBat(enemy){
-  equipment.weapon = bogItem[0]
       $("<p>You attack the "+enemy.name+"!</p>").insertBefore("#Bplaceholder")
+      if(equipment.weapon =="unarmed"){
+          var delay = 5000
+      }else{
+          var delay = equipment.weapon.delay * 100
+      }
       var enemyHP = enemy.health
-      var combat =  setInterval(function(){
-                      if(equipment.weapon == "none"){
+
+      var enemy_combat = setInterval(function(){
+
+                      var edmg = Math.floor(Math.random()*(enemy.damage*10)+1);
+
+                      if(enemyHP > 0){
+                          player.hitpoints -= edmg
+                          $("<p>The "+enemy.name+" bites your back for "+edmg+"!</p>").insertBefore("#Bplaceholder")
+                          $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
+                      }
+
+      }, enemy.delay * 100)
+
+------------------------------------------------------------------------------------------------------------------
+
+      var player_combat =  setInterval(function(){
+
+                      if(equipment.weapon == "unarmed"){
                         var pdmg = Math.floor(Math.random()*20+1)
                       }else{
                         var pdmg = Math.floor(Math.random()*(equipment.weapon.damage*10)+1)
                       }
 
-                      var edmg = Math.floor(Math.random()*15+1);
-
                       if(player.hitpoints <= 0){
                           $("<p>YOU DIED</p>").insertBefore("#placeholder")
                           $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
-                          clearInterval(combat)
+                          clearInterval(player_combat)
+                          clearInterval(enemy_combat)
                       }else if(enemyHP <= 0){
                           $("<p>The "+enemy.name+" has been defeated. It is dead on the ground.</p>").insertBefore("#Bplaceholder")
                           $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                           player.experience += enemy.exp
-                        clearInterval(combat)
+                        clearInterval(player_combat)
+                        clearInterval(enemy_combat)
                       }else if(enemyHP > 0){
                           enemyHP -= pdmg
                           $("<p>You strike the "+enemy.name+" for "+pdmg+" damage.</p>").insertBefore("#Bplaceholder")
                           $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
-                          setTimeout(function(){
-                              player.hitpoints -= edmg
-                              $("<p>The "+enemy.name+" bites your back for "+edmg+"!</p>").insertBefore("#Bplaceholder")
-                              $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
-                          },1500)
                       }
-                  }, 2000)
+       }, delay)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
