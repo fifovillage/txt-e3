@@ -51,14 +51,24 @@ var equipment = {weapon:"unarmed"}
 ////////////////////////////////////////////////////////////////////////////////
 //bog variables
 
-var bug       = false
-var exsod     = false
+var bugDead = false
+var bugPickUp = false
+var exsod   = false
 
 // bog bestiary
 var bogEnemy  = [
-        {name:"bug", health  :75, damage:1, delay:20, exp :15},
-        {name:"snake", health:100, damage:2, delay:25, exp:20},
-        {name:"crab", health :150, damage:5, delay:50, exp:30}]
+        {name:"bug", health  :75, damage:1, delay:20, exp :15,
+              loot:[{name:"Fire Beetle Eye", description:"poop"},
+                    {name:"Bug Wing", description:"poop"},
+                    {name:"Bug Stinger", description:"poop"}]},
+        {name:"snake", health:100, damage:2, delay:25, exp:20,
+              loot:[{name:"Snake Legs", description:"poop"},
+                    {name:"Snake Venom", description:"poop"},
+                    {name:"Half-Digested Bug", description:"poop"}]},
+        {name:"crab", health :150, damage:5, delay:50, exp:30,
+              loot:[{name:"Crab Meat", description:"poop"},
+                    {name:"Broken Crab Leg", description:"poop"},
+                    {name:"Crab Eggs", description:"poop"}]}]
 
 // bog item list
 var bogItem   = [
@@ -121,7 +131,7 @@ function refreshStatWindow(){
 // da combat code
 function comBat(enemy){
       inCombat = true
-      console.log(inCombat)
+
       $("<p>You attack the "+enemy.name+"!</p>").insertBefore("#Bplaceholder")
       if(equipment.weapon =="unarmed"){
           var delay = 5000
@@ -156,23 +166,40 @@ function comBat(enemy){
                           $("<p>YOU DIED</p>").insertBefore("#placeholder")
                           $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
                           inCombat = false
-                          console.log(inCombat)
                           clearInterval(player_combat)
                           clearInterval(enemy_combat)
                       }else if(enemyHP <= 0){
-                          $("<p>The "+enemy.name+" has been defeated. It is dead on the ground.</p>").insertBefore("#Bplaceholder")
-                          $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                           player.experience += enemy.exp
+
+                          $("<p>The "+enemy.name+" has been defeated. It is dead on the ground.</p>").insertBefore("#Bplaceholder")
+                          $("<p>You gain "+enemy.exp+" experience!</p>").insertBefore("#placeholder")
+                          $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
+                          $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
                           inCombat = false
-                          console.log(inCombat)
                         clearInterval(player_combat)
                         clearInterval(enemy_combat)
+                        lootDrop(enemy)
                       }else if(enemyHP > 0){
                           enemyHP -= pdmg
                           $("<p>You strike the "+enemy.name+" for "+pdmg+" damage.</p>").insertBefore("#Bplaceholder")
                           $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                       }
        }, delay)
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// enemy loot drops
+
+function lootDrop(enemy){
+  var money = Math.floor((Math.random()*2+1) * enemy.damage)
+  player.currency += money
+
+  var ran = Math.floor(Math.random()*3)
+  var item_drop = enemy.loot[ran]
+  console.log(item_drop)
+  inventory.push(item_drop)
+  $("<p>You received "+item_drop.name+" and "+money+" platinum from the fallen "+enemy.name+".</p>").insertBefore("#placeholder")
+  $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -213,6 +240,8 @@ setInterval(refreshStatWindow, 100)
           $("<p>You eat the dead bug and restore "+inventory[inventory.indexOf(bogItem[1])].healing+" health. Yucky.</p>").insertBefore("#placeholder")
           inventory.splice(inventory.indexOf(bogItem[1]), 1)
         }else if((input =="equip leg" || input =="equip bug leg") && inventory.indexOf(bogItem[0] > -1)){
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+            $("<p>You equip the bug leg.</p>").insertBefore("#placeholder")
             equipment.weapon = bogItem[0]
         }
 
@@ -221,21 +250,22 @@ setInterval(refreshStatWindow, 100)
         else if(input == "take bug" && currentArea == "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
 
-            if(player.hitpoints <= 5 && bug == false){
+            if(player.hitpoints <= 5 && bugDead == false){
               $("<p>One more time and that bug will kill you.</p>").insertBefore("#placeholder")
 
-            }else if(bug == false){
+            }else if(bugDead == false){
               $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
               player.hitpoints -= 5
-            }else if(bug == true && inventory.indexOf(bogItem[1]) == -1){
+            }else if(bugDead == true && bugPickUp == false){
               $("<p>You pick up the bug from the bog and place it in your bag.</p>").insertBefore("#placeholder")
               inventory.push(bogItem[1])
-            }else if(bug == true && inventory.indexOf(bogItem[1]) > -1){
+              bugPickUp = true
+            }else if(bugDead == true && bugPickUp == true){
               $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
             }
-        }else if(input =="attack bug" && currentArea == "nBog" && bug == false){
+        }else if(input =="attack bug" && currentArea == "nBog" && bugDead == false){
           $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
-          bug = true;
+          bugDead = true;
 
         }else if(input =="look" && currentArea == "nBog"){
           $(nBogInfo).insertBefore("#placeholder")
