@@ -81,7 +81,7 @@ var bogItem   = [
 
 // bog merchant item stock
 var bogMerchantItem = [
-        {name:"potion", description:"restores 100 health", price:5,
+        {name:"Potion", description:"restores 100 health", price:5,
               value:1, quantity:2}]
 
 
@@ -95,7 +95,9 @@ function bogMerchant(input){
 
       for(var i = 0; i < bogMerchantItem.length; i++){
 
-          if(input.substring(4) == bogMerchantItem[i].name && player.currency >= bogMerchantItem[i].price){
+          var merch_item = bogMerchantItem[i].name.toLowerCase()
+
+          if(input.substring(4) == merch_item && player.currency >= bogMerchantItem[i].price){
 
               if(bogMerchantItem[i].quantity > 1){
                 bogMerchantItem[i].quantity -= 1
@@ -110,7 +112,7 @@ function bogMerchant(input){
                   bogMerchantItem.splice(bogMerchantItem[i])
               }
           }
-          else if(input.substring(4) == bogMerchantItem[i].name && player.currency < bogMerchantItem[i].price){
+          else if(input.substring(4) == merch_item && player.currency < bogMerchantItem[i].price){
               $("<p>You can't afford that.</p>").insertBefore("#placeholder")
           }
           else{
@@ -126,7 +128,9 @@ function bogMerchant(input){
 
       for(var i = 0; i < inventory.length; i++){
 
-          if(input.substring(5) == inventory[i].name){
+          var item_name = inventory[i].name.toLowerCase()
+
+          if(input.substring(5) == item_name){
               $("<p style='color:lime;'>You sell the "+inventory[i].name+" for "+inventory[i].value+" platinum.</p>").insertBefore("#Bplaceholder")
               player.currency += inventory[i].value
               inventory.splice(inventory[i], 1)
