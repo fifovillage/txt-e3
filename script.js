@@ -328,6 +328,7 @@ setInterval(refreshStatWindow, 100)
               $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
             }
         }else if(input =="attack bug" && currentArea == "nBog" && bugDead == false){
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
           bugDead = true;
 
