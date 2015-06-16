@@ -259,7 +259,7 @@ function lootDrop(enemy){
 
   var ran = Math.floor(Math.random()*3)
   var item_drop = enemy.loot[ran]
-  console.log(item_drop)
+
   inventory.push(item_drop)
   $("<p>You received "+item_drop.name+" and "+money+" platinum from the fallen "+enemy.name+".</p>").insertBefore("#placeholder")
   $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
@@ -641,6 +641,7 @@ setInterval(refreshStatWindow, 100)
 
 //scroll to the bottom
       $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight);
+      $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
     })
 
 });
