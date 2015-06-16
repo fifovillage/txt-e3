@@ -27,7 +27,7 @@ var player    = {
        hitpoints:242,
        mana:20,
        experience:0,
-       currency: 10
+       currency: 0
 }
 
 var reqXP     = [
@@ -59,17 +59,17 @@ var bogShop = false
 // bog bestiary
 var bogEnemy  = [
         {name:"bug", health  :75, damage:1, delay:20, exp :15,
-              loot:[{name:"Fire Beetle Eye", description:"poop", sell_value:2},
-                    {name:"Bug Wing", description:"poop", sell_value:1},
-                    {name:"Bug Stinger", description:"poop", sell_value:1}]},
+              loot:[{name:"Fire Beetle Eye", description:"poop", value:2},
+                    {name:"Bug Wing", description:"poop", value:1},
+                    {name:"Bug Stinger", description:"poop", value:1}]},
         {name:"snake", health:100, damage:2, delay:25, exp:20,
-              loot:[{name:"Snake Legs", description:"poop", sell_value:2},
-                    {name:"Snake Venom", description:"poop", sell_value:2},
-                    {name:"Half-Digested Bug", description:"poop", sell_value:1}]},
+              loot:[{name:"Snake Legs", description:"poop", value:2},
+                    {name:"Snake Venom", description:"poop", value:2},
+                    {name:"Half-Digested Bug", description:"poop", value:1}]},
         {name:"crab", health :150, damage:5, delay:50, exp:30,
-              loot:[{name:"Crab Meat", description:"poop", sell_value:1},
-                    {name:"Broken Crab Leg", description:"poop", sell_value:1},
-                    {name:"Crab Eggs", description:"poop", sell_value:3}]}]
+              loot:[{name:"Crab Meat", description:"poop", value:1},
+                    {name:"Broken Crab Leg", description:"poop", value:1},
+                    {name:"Crab Eggs", description:"poop", value:3}]}]
 
 // bog item list
 var bogItem   = [
@@ -134,6 +134,9 @@ function bogMerchant(input){
 
       }
   }
+  $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight);
+  $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
+
 }
 
 ///////////////////////////////////////////////////////////////////////////
