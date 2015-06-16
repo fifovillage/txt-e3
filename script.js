@@ -9,7 +9,7 @@ var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log,
 var wBogInfo = "<p>[Western Bog]<br></p>"
 var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
 var houseInfo = "<p>[Shack]<br></p>"
-var bogCampInfo = "<p>[Bog Camp]<br></p>"
+var bogCampInfo = "<p>[Bog Camp]Merchant Location<br></p>"
 var caveEntranceInfo = "<p>[Cave Entrance]<br></p>"
 var bugLairInfo = "<p>[Bug Lair]<br></p>"
 var bugHiveInfo = "<p>[Bug Hive]<br></p>"
@@ -20,14 +20,14 @@ var bugDenInfo = "<p>[Bug Den]<br></p>"
 // initial variables
 
 var inCombat = false
-var currentArea = "nBog"
+var currentArea = "bogCamp"
 
 var player    = {
        level: 1,
        hitpoints:242,
        mana:20,
        experience:0,
-       currency: 0
+       currency: 10
 }
 
 var reqXP     = [
@@ -49,32 +49,92 @@ var equipment = {weapon:"unarmed"}
 
 
 ////////////////////////////////////////////////////////////////////////////////
-//bog variables
+//bog variables & functions
 
 var bugDead = false
 var bugPickUp = false
 var exsod   = false
+var bogShop = false
 
 // bog bestiary
 var bogEnemy  = [
         {name:"bug", health  :75, damage:1, delay:20, exp :15,
-              loot:[{name:"Fire Beetle Eye", description:"poop"},
-                    {name:"Bug Wing", description:"poop"},
-                    {name:"Bug Stinger", description:"poop"}]},
+              loot:[{name:"Fire Beetle Eye", description:"poop", sell_value:2},
+                    {name:"Bug Wing", description:"poop", sell_value:1},
+                    {name:"Bug Stinger", description:"poop", sell_value:1}]},
         {name:"snake", health:100, damage:2, delay:25, exp:20,
-              loot:[{name:"Snake Legs", description:"poop"},
-                    {name:"Snake Venom", description:"poop"},
-                    {name:"Half-Digested Bug", description:"poop"}]},
+              loot:[{name:"Snake Legs", description:"poop", sell_value:2},
+                    {name:"Snake Venom", description:"poop", sell_value:2},
+                    {name:"Half-Digested Bug", description:"poop", sell_value:1}]},
         {name:"crab", health :150, damage:5, delay:50, exp:30,
-              loot:[{name:"Crab Meat", description:"poop"},
-                    {name:"Broken Crab Leg", description:"poop"},
-                    {name:"Crab Eggs", description:"poop"}]}]
+              loot:[{name:"Crab Meat", description:"poop", sell_value:1},
+                    {name:"Broken Crab Leg", description:"poop", sell_value:1},
+                    {name:"Crab Eggs", description:"poop", sell_value:3}]}]
 
 // bog item list
 var bogItem   = [
-        {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35, description:"Could be used as a crude weapon."},
-        {slot:"none", name:"Dead Bug", healing:20, description:"Eat this to restore a small amount of health."}
-]
+        {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35,
+              description:"Could be used as a crude weapon.", value:1},
+        {slot:"none", name:"Dead Bug", healing:20,
+              description:"Restores a small amount of health.", value:1}]
+
+
+// bog merchant item stock
+var bogMerchantItem = [
+        {name:"potion", description:"restores 100 health", price:5,
+              value:1, quantity:2}]
+
+
+// bog merchant function
+function bogMerchant(input){
+  if(input.substring(0, 3) == "buy"){
+
+    if(bogMerchantItem.length == 0){
+      $("<p>You bought everything I had to sell! Thanks bubby!</p>").insertBefore("#placeholder")
+    }
+
+      for(var i = 0; i < bogMerchantItem.length; i++){
+
+          if(input.substring(4) == bogMerchantItem[i].name && player.currency >= bogMerchantItem[i].price){
+
+              if(bogMerchantItem[i].quantity > 1){
+                bogMerchantItem[i].quantity -= 1
+                inventory.push(bogMerchantItem[i])
+                player.currency -= bogMerchantItem[i].price
+                $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+              }
+              else if(bogMerchantItem[i].quantity <= 1){
+                  inventory.push(bogMerchantItem[i])
+                  player.currency -= bogMerchantItem[i].price
+                  $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+                  bogMerchantItem.splice(bogMerchantItem[i])
+              }
+          }
+          else if(input.substring(4) == bogMerchantItem[i].name && player.currency < bogMerchantItem[i].price){
+              $("<p>You can't afford that.</p>").insertBefore("#placeholder")
+          }
+          else{
+              $("<p>I don't have that for sale!</p>").insertBefore("#placeholder")
+          }
+      }
+  }
+//------------------------------------------------------------------------------
+  else if(input.substring(0, 4) == "sell"){
+    if(inventory.length == 0){
+      $("<p>You have nothing in your inventory to sell.</p>").insertBefore("#placeholder")
+    }
+
+      for(var i = 0; i < inventory.length; i++){
+
+          if(input.substring(5) == inventory[i].name){
+              $("<p style='color:lime;'>You sell the "+inventory[i].name+" for "+inventory[i].value+" platinum.</p>").insertBefore("#Bplaceholder")
+              player.currency += inventory[i].value
+              inventory.splice(inventory[i], 1)
+          }
+
+      }
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////
 // cave variables
@@ -223,8 +283,9 @@ setInterval(refreshStatWindow, 100)
 
         }else if(input =="inventory"){
             if(inventory.length > 0){
+              $("<p>Bottomless Bag:<br></p>").insertBefore("#placeholder")
               for(var i = 0; i < inventory.length; i++){
-                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"<br>---------"+inventory[i].description+"<br><br></p>").insertBefore("#placeholder")
+                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"<br>---------"+inventory[i].description+"<br></p>").insertBefore("#placeholder")
               }
             }else{
               $("<p>Your bag is empty.</p>").insertBefore("#placeholder")
@@ -464,16 +525,40 @@ setInterval(refreshStatWindow, 100)
 
 
 //movement at bog camp
-        else if((input =="north" || input=="n") && currentArea == "bogCamp"){
+        else if((input =="north" || input=="n") && currentArea == "bogCamp" && bogShop == false){
           currentArea = "sBog"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(sBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
-        else if((input =="east" || input=="e") && currentArea == "bogCamp"){
+        else if((input =="east" || input=="e") && currentArea == "bogCamp" && bogShop == false){
           currentArea = "caveEntrance"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(caveEntranceInfo).insertBefore("#placeholder")
+        }
+
+//bog camp merchant
+        else if(input =="talk to merchant" && currentArea == "bogCamp" && bogShop == false){
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+            bogShop = true
+            $("<p>Welcome to em' shop! Type list to display items for sale, buy [item] to purchase and sell [item] to sell! If you're all done, [leave]!</p>").insertBefore("#placeholder")
+        }
+        else if(input =="list" && currentArea == "bogCamp" && bogShop == true){
+          if(bogMerchantItem.length == 0){
+            $("<p style='color:white;'>There are no items left in stock.</p>").insertBefore("#Bplaceholder")
+          }
+          else{
+            for(var i = 0; i < bogMerchantItem.length; i++){
+                $("<p style='color:white;'>--"+bogMerchantItem[i].name+"<br>----"+bogMerchantItem[i].description+"<br>Price: "+bogMerchantItem[i].price+" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stock: "+bogMerchantItem[i].quantity+"</p>").insertBefore("#Bplaceholder")
+            }
+          }
+        }
+        else if((input.substring(0, 3) == "buy" || input.substring(0, 4) == "sell") && bogShop == true){
+            bogMerchant(input)
+        }
+        else if(input =="leave" && currentArea =="bogCamp" && bogShop == true){
+            bogShop = false
+            $("<p>Thanks for shopping!</p>").insertBefore("#placeholder")
         }
 
 ////////////////////////////////////////////////////////////////////////////////
