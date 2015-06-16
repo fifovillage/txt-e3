@@ -20,7 +20,7 @@ var bugDenInfo = "<p>[Bug Den]<br></p>"
 // initial variables
 
 var inCombat = false
-var currentArea = "bogCamp"
+var currentArea = "nBog"
 
 var player    = {
        level: 1,
