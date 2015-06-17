@@ -90,7 +90,6 @@ function randomEncounterBog(){
 
 //cave random encounter
 function randomEncounterCave(){
-
 }
 ///////////////////////////////////////////////////////////////////////////////
 //stat window refresh
@@ -237,6 +236,8 @@ setInterval(refreshStatWindow, 100)
           $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
           bug = true;
 
+
+//look nBog
         }else if(input =="look" && currentArea == "nBog"){
           $(nBogInfo).insertBefore("#placeholder")
 
@@ -264,6 +265,12 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 //EASTERN BOG COAST CONDITIONS [eBogCoast]
 
+
+//look eBogCoast
+        else if(input =="look" && currentArea == "eBogCoast"){
+          $(eBogCoastInfo).insertBefore("#placeholder")
+            }
+
 //movement from eBogCoast
         else if((input =="west" || input=="w") && currentArea == "eBogCoast"){
                   currentArea = "nBog"
@@ -280,6 +287,12 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //EASTERN BOG CONDITIONS [eBog]
+
+
+//look eBog
+else if(input =="look" && currentArea == "eBog"){
+  $(eBogInfo).insertBefore("#placeholder")
+    }
 
 //movement from eBog
         else if((input =="north" || input=="n") && currentArea == "eBog"){
@@ -311,6 +324,11 @@ setInterval(refreshStatWindow, 100)
             $("<p>You already have the bug's only salvageable leg.</p>").insertBefore("#placeholder")
 }
 
+//look wBogCoast
+      else if(input =="look" && currentArea == "wBogCoast"){
+        $(wBogCoastInfo).insertBefore("#placeholder")
+          }
+
 //movement from wBogCoast
   else if((input =="west" || input=="w") && currentArea == "wBogCoast"){
             currentArea = "houseFront"
@@ -334,6 +352,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 //FRONT OF HOUSE CONDITIONS [houseFront]
 
+//look houseFront
+else if(input =="look" && currentArea == "houseFront"){
+  $(houseFrontInfo).insertBefore("#placeholder")
+    }
 
 //movement at House Front
         else if((input =="west" || input=="w") && currentArea == "houseFront"){
@@ -352,7 +374,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // MAMA HOUSE CONDITIONS [house]
 
-
+//look house
+else if(input =="look" && currentArea == "house"){
+  $(houseInfo).insertBefore("#placeholder")
+    }
 //movement at house
         else if((input =="east" || input=="e") && currentArea == "house"){
           currentArea = "houseFront"
@@ -363,6 +388,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // WEST BOG CONDITIONS [wBog]
 
+//look wBog
+else if(input =="look" && currentArea == "wBog"){
+  $(wBogInfo).insertBefore("#placeholder")
+    }
 
 //movement at west bog
         else if((input =="east" || input=="e") && currentArea == "wBog"){
@@ -379,10 +408,14 @@ setInterval(refreshStatWindow, 100)
         }
 
 ////////////////////////////////////////////////////////////////////////////////
-
 ////////////////////////////////////////////////////////////////////////////////
 // CENTRAL BOG CONDITIONS [cBog]
 
+
+//look for CbOG
+else if(input =="look" && currentArea == "cBog"){
+  $(cBogInfo).insertBefore("#placeholder")
+    }
 
 //movement at central bog
         else if((input =="north" || input=="n") && currentArea == "cBog"){
@@ -410,10 +443,14 @@ setInterval(refreshStatWindow, 100)
             randomEncounterBog()
         }
 ////////////////////////////////////////////////////////////////////////////////
-
 ////////////////////////////////////////////////////////////////////////////////
 // SOUTH BOG CONDITIONS [sBog]
 
+
+//look for sbOg
+else if(input =="look" && currentArea == "sBog"){
+  $(sBogInfo).insertBefore("#placeholder")
+    }
 
 //movement at central bog
         else if((input =="north" || input=="n") && currentArea == "sBog"){
@@ -432,6 +469,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // BOG CAMP CONDITIONS [bogCamp]
 
+//look for bogCamp
+else if(input =="look" && currentArea == "bogCamp"){
+  $(bogCampInfo).insertBefore("#placeholder")
+    }
 
 //movement at bog camp
         else if((input =="north" || input=="n") && currentArea == "bogCamp"){
@@ -450,6 +491,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // CAVE ENTRANCE CONDITIONS [caveEntrance]
 
+//look for caveEntrance
+else if(input =="look" && currentArea == "caveEntrance"){
+  $(caveEntranceInfo).insertBefore("#placeholder")
+    }
 
 //movement at cave entrance
         else if((input =="west" || input=="w") && currentArea == "caveEntrance"){
@@ -466,7 +511,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // BUG LAIR CONDITIONS [bugLair]
 
-
+//look for bugLair
+else if(input =="look" && currentArea == "bugLair"){
+  $(bugLairInfo).insertBefore("#placeholder")
+    }
 //movement at bug lair
         else if((input =="west" || input=="w") && currentArea == "bugLair"){
           currentArea = "caveEntrance"
@@ -483,6 +531,11 @@ setInterval(refreshStatWindow, 100)
 // BUG DEN CONDITIONS [bugDen]
 
 
+//look bugDen
+else if(input =="look" && currentArea == "bugDen"){
+  $(bugDenInfo).insertBefore("#placeholder")
+    }
+
 //movement at bug den
         else if((input =="east" || input=="e") && currentArea == "bugDen"){
           currentArea = "bugHive"
@@ -498,6 +551,10 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // BUG HIVE CONDITIONS [bugHive]
 
+//look at bug hive
+else if(input =="look" && currentArea == "bugHive"){
+  $(bugHiveInfo).insertBefore("#placeholder")
+    }
 
 //movement at bug Hive
         else if((input =="west" || input=="w") && currentArea == "bugHive"){
