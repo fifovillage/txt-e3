@@ -485,6 +485,10 @@ else if(input =="look" && currentArea == "houseFront"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(houseInfo).insertBefore("#placeholder")
         }
+        else if((input =="west" || input=="w") && currentArea == "houseFront" && houseBlock == true){
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+            $("<p>You bust into a blockade.</p>").insertBefore("#placeholder")
+        }
         else if((input =="east" || input=="e") && currentArea == "houseFront"){
           currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
@@ -643,6 +647,15 @@ else if(input =="look" && currentArea == "caveEntrance"){
     }
 
 //movement at cave entrance
+        else if((input =="east" || input=="e") && currentArea == "caveEntrance" && bugLairBlock == true){
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+          $("<p>You bust into a blockade.</p>").insertBefore("#placeholder")
+        }
+        else if((input =="east" || input=="e") && currentArea == "caveEntrance" && bugLairBlock == false){
+          currentArea = "bugLair"
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+          $(bugLairInfo).insertBefore("#placeholder")
+        }
         else if((input =="west" || input=="w") && currentArea == "caveEntrance"){
           currentArea = "bogCamp"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
@@ -653,6 +666,7 @@ else if(input =="look" && currentArea == "caveEntrance"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(bugLairInfo).insertBefore("#placeholder")
         }
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // BUG LAIR CONDITIONS [bugLair]
@@ -667,11 +681,8 @@ else if(input =="look" && currentArea == "bugLair"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(caveEntranceInfo).insertBefore("#placeholder")
         }
-        else if((input =="east" || input=="e") && currentArea == "bugLair" && bugLairBlock == false){
-          currentArea = "bugDen"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(bugDenInfo).insertBefore("#placeholder")
-        }
+
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // BUG DEN CONDITIONS [bugDen]
