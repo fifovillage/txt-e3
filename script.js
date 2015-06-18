@@ -1,15 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 // initial zone info
 var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. You admire a bug in the bog water. There seems to be some light shining from the west.</p>"
-var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
-var eBogInfo  = "<p>[Eastern Bog]<br></p>"
+var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>Stone with mystical runes location</p>"
+var eBogInfo  = "<p>[Eastern Bog]<br>Zohar Location</p>"
 var cBogInfo  = "<p>[Central Bog]<br></p>"
 var sBogInfo  = "<p>[Southern Bog]<br></p>"
 var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
 var wBogInfo = "<p>[Western Bog]<br></p>"
 var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
 var houseInfo = "<p>[Shack]<br></p>"
-var bogCampInfo = "<p>[Bog Camp]Merchant Location<br></p>"
+var bogCampInfo = "<p>[Bog Camp]<br>A merchant stands there, looking cross-eyed.<br></p>"
 var caveEntranceInfo = "<p>[Cave Entrance]<br></p>"
 var bugLairInfo = "<p>[Bug Lair]<br></p>"
 var bugHiveInfo = "<p>[Bug Hive]<br></p>"
@@ -195,7 +195,7 @@ function refreshStatWindow(){
       $("#hp").append("Health: "+player.hitpoints+" / "+maxHP)
       $("#mp").append("Mana: "+player.mana)
       $("#xp").append("Exp: "+player.experience+" / "+reqXP[player.level - 1])
-      $("#currency").append("Bill Fold: "+player.currency)
+      $("#currency").append("Bill Fold: "+player.currency+ " platinum")
   }
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -292,16 +292,22 @@ setInterval(refreshStatWindow, 100)
           player.name = input
           currentArea = "nBog"
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $("<p>So you are called " + input + ".</p><p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").insertBefore("#placeholder")
-          $("<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner, " + player.name + "!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>").insertBefore("#placeholder")
+          $("<p>So you are called " + input + ".</p><p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").fadeIn(3000).insertBefore("#placeholder")
+          setTimeout(
+            function(){
+                    $("#mainConsole").empty().append("<div id=\"placeholder\"></div>")
+                    $("<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your mother calling for you in the distance. \"It's time you came back for dinner, " + player.name + "!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p><p>Type <b>help</b> for a list of commands</p>").fadeIn(200).insertBefore("#placeholder")
+            },3500)
       }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // HELP INPUT
 
         else if(input == "help"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("#msgHelp").clone().insertBefore("#placeholder").fadeIn(0)
+            $("<p>Here go a list of commands:<br> (n)orth / (s)outh / (e)ast / (w)est<br>look<br>get/take [object]<br>examine [object]<br>attack [object/person/creature]<br>talk to [object/person/creature]<br>inventory<br>use [inventory item]<br>equip [weapon]<br></p>").insertBefore("#placeholder")
 
 ////////////////////////////////////////////////////////////////////////////////
 //INVENTORY COMMANDS
@@ -335,7 +341,7 @@ setInterval(refreshStatWindow, 100)
 ////////////////////////////////////////////////////////////////////////////////
 // NORTHERN BOG CONDITIONS[nBog]
 
-        else if(input == "take bug" && currentArea == "nBog"){
+        else if((input == "take bug" || input == "get bug") && currentArea == "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
 
             if(player.hitpoints <= 5 && bugDead == false){
@@ -437,7 +443,7 @@ else if(input =="look" && currentArea == "eBog"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>Here lays a fallen bug, its legs worn down to a crude edge by the waters of the bog and the passage of time. You may be able to use one of the legs as an improvised bog bug weapon.</p>").insertBefore("#placeholder")
             exsod = true
-        }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) == -1){
+        }else if((input =="take leg" || input =="take bug leg" || input=="get leg" || input=="get bug leg") && exsod == true && inventory.indexOf(bogItem[0]) == -1){
             inventory.push(bogItem[0])
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>You place the bog bug's leg into your bottomless bag.</p>").insertBefore("#placeholder")
