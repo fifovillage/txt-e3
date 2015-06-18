@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // initial zone info
-var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>"
+var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. You admire a bug in the bog water. There seems to be some light shining from the west.</p>"
 var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
 var eBogInfo  = "<p>[Eastern Bog]<br></p>"
 var cBogInfo  = "<p>[Central Bog]<br></p>"
@@ -15,19 +15,19 @@ var bugLairInfo = "<p>[Bug Lair]<br></p>"
 var bugHiveInfo = "<p>[Bug Hive]<br></p>"
 var bugDenInfo = "<p>[Bug Den]<br></p>"
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // initial variables
 
 var inCombat = false
-var currentArea = "nBog"
+var currentArea = "namePlayer"
 
 var player    = {
        level: 1,
        hitpoints:242,
        mana:20,
        experience:0,
-       currency: 0
+       currency: 0,
+       name: ""
 }
 
 var reqXP     = [
@@ -49,12 +49,14 @@ var equipment = {weapon:"unarmed"}
 
 
 ////////////////////////////////////////////////////////////////////////////////
-//bog variables & functions
+// bog init variables & functions
 
 var bugDead = false
 var bugPickUp = false
 var exsod   = false
 var bogShop = false
+var houseBlock = true
+var bugLairBlock = true
 
 // bog bestiary
 var bogEnemy  = [
@@ -174,6 +176,7 @@ function randomEncounterCave(){
 function refreshStatWindow(){
   maxHP = reqXP[player.level-1] * (player.level + 1) ^2
 
+  $("#playerName").empty()
   $("#lvl").empty()
   $("#hp").empty()
   $("#mp").empty()
@@ -181,12 +184,14 @@ function refreshStatWindow(){
   $("#currency").empty()
 
   if(player.hitpoints < 0){
+      $("#playerName").append(player.name)
       $("#lvl").append("Level YOU DIED")
       $("#hp").append("Health: YOU DIED")
       $("#mp").append("Mana: YOU DIED")
       $("#xp").append("Exp: NONE YOU DIED")
       $("#currency").append("Bill Fold: AI'NT NAM")
   }else{
+      $("#playerName").append(player.name)
       $("#lvl").append("Level " +player.level)
       $("#hp").append("Health: "+player.hitpoints+" / "+maxHP)
       $("#mp").append("Mana: "+player.mana)
@@ -281,6 +286,9 @@ setInterval(refreshStatWindow, 100)
 
       if(player.hitpoints > 0){
 
+////////////////////////////////////////////////////////////////////////////////
+// HELP INPUT
+
         if(input == "help"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("#msgHelp").clone().insertBefore("#placeholder").fadeIn(0)
@@ -313,8 +321,21 @@ setInterval(refreshStatWindow, 100)
             equipment.weapon = bogItem[0]
         }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// NAME PLAYER STARTING AREA
+
+      else if(currentArea=="namePlayer"){
+        player.name = input
+        currentArea = "nBog"
+        $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+        $("<p>So you are called " + input + ".</p><p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").insertBefore("#placeholder")
+        $("<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner, " + player.name + "!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>").insertBefore("#placeholder")
+      }
+
 ////////////////////////////////////////////////////////////////////////////////
 // NORTHERN BOG CONDITIONS[nBog]
+
         else if(input == "take bug" && currentArea == "nBog"){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
 
@@ -328,6 +349,7 @@ setInterval(refreshStatWindow, 100)
               $("<p>You pick up the bug from the bog and place it in your bag.</p>").insertBefore("#placeholder")
               inventory.push(bogItem[1])
               bugPickUp = true
+              nBogInfo = nBogInfo.replace("You admire a bug in the bog water. ", "")
             }else if(bugDead == true && bugPickUp == true){
               $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
             }
@@ -337,6 +359,7 @@ setInterval(refreshStatWindow, 100)
           bugDead = true;
 
         }else if(input =="look" && currentArea == "nBog"){
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $(nBogInfo).insertBefore("#placeholder")
 
 //movement: northern bog
@@ -435,7 +458,7 @@ setInterval(refreshStatWindow, 100)
 
 
 //movement at House Front
-        else if((input =="west" || input=="w") && currentArea == "houseFront"){
+        else if((input =="west" || input=="w") && currentArea == "houseFront" && houseBlock == false){
           currentArea = "house"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(houseInfo).insertBefore("#placeholder")
@@ -596,7 +619,7 @@ setInterval(refreshStatWindow, 100)
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(caveEntranceInfo).insertBefore("#placeholder")
         }
-        else if((input =="east" || input=="e") && currentArea == "bugLair"){
+        else if((input =="east" || input=="e") && currentArea == "bugLair" && bugLairBlock == false){
           currentArea = "bugDen"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(bugDenInfo).insertBefore("#placeholder")
