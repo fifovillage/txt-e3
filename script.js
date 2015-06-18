@@ -614,7 +614,7 @@ else if(input =="look" && currentArea == "bogCamp"){
         }
 
 //bog camp merchant
-        else if((input =="talk to merchant" || "talk merchant") && currentArea == "bogCamp" && bogShop == false){
+        else if((input =="talk to merchant" || input=="talk merchant") && currentArea == "bogCamp" && bogShop == false){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             bogShop = true
             $("<p>Welcome to em' shop! Type <b>list</b> to display items for sale, <b>buy [item]</b> to purchase and <b>sell [item]</b> to sell! If you're all done, <b>leave</b>!</p>").insertBefore("#placeholder")
