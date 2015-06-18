@@ -286,9 +286,20 @@ setInterval(refreshStatWindow, 100)
       if(player.hitpoints > 0){
 
 ////////////////////////////////////////////////////////////////////////////////
+// NAME PLAYER
+
+      if(currentArea=="namePlayer"){
+          player.name = input
+          currentArea = "nBog"
+          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+          $("<p>So you are called " + input + ".</p><p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").insertBefore("#placeholder")
+          $("<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner, " + player.name + "!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>").insertBefore("#placeholder")
+      }
+
+////////////////////////////////////////////////////////////////////////////////
 // HELP INPUT
 
-        if(input == "help"){
+        else if(input == "help"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("#msgHelp").clone().insertBefore("#placeholder").fadeIn(0)
 
@@ -320,17 +331,6 @@ setInterval(refreshStatWindow, 100)
             equipment.weapon = bogItem[0]
         }
 
-
-////////////////////////////////////////////////////////////////////////////////
-// NAME PLAYER STARTING AREA
-
-      else if(currentArea=="namePlayer"){
-        player.name = input
-        currentArea = "nBog"
-        $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-        $("<p>So you are called " + input + ".</p><p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").insertBefore("#placeholder")
-        $("<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner, " + player.name + "!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>").insertBefore("#placeholder")
-      }
 
 ////////////////////////////////////////////////////////////////////////////////
 // NORTHERN BOG CONDITIONS[nBog]
