@@ -4,12 +4,12 @@ var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the b
 var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>Stone with runes location</p>"
 var eBogInfo  = "<p>[Eastern Bog]<br>Zohar Location</p>"
 var cBogInfo  = "<p>[Central Bog]<br></p>"
-var sBogInfo  = "<p>[Southern Bog]<br></p>"
+var sBogInfo  = "<p>[Southern Bog]<br>road sign</p>"
 var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
 var wBogInfo = "<p>[Western Bog]<br></p>"
 var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.<br></p>"
 var houseInfo = "<p>[Shack]<br></p>"
-var bogCampInfo = "<p>[Bog Camp]<br>A dusty old merchant stands there, looking cross-eyed.<br></p>"
+var bogCampInfo = "<p>[Bog Camp]<br>A merchant stands there, looking cross-eyed.<br></p>"
 var caveEntranceInfo = "<p>[Cave Entrance]<br></p>"
 var bugLairInfo = "<p>[Bug Lair]<br></p>"
 var bugHiveInfo = "<p>[Bug Hive]<br></p>"
@@ -191,7 +191,7 @@ function refreshStatWindow(){
       $("#hp").append("Health: YOU DIED")
       $("#mp").append("Mana: YOU DIED")
       $("#xp").append("Exp: NONE YOU DIED")
-      $("#currency").append("Bill Fold: AIN'T NAM")
+      $("#currency").append("Bill Fold: YOU DIED")
   }else{
       $("#playerName").append(player.name)
       $("#lvl").append("Level " +player.level)
@@ -292,15 +292,16 @@ setInterval(refreshStatWindow, 100)
 // NAME PLAYER
 
       if(currentArea=="namePlayer"){
+        currentArea = null
           player.name = input
-          currentArea = "nBog"
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $("<p>So you are called " + input + ".</p>").insertBefore("#placeholder")
-          $("<p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").fadeIn(3000).insertBefore("#placeholder")
+          $("<p>So, you are called " + input + ".</p>").insertBefore("#placeholder")
+          $("<p>A BLINDING LIGHT FILLS YOUR VISION...</p>").fadeIn(3100).insertBefore("#placeholder")
           setTimeout(
             function(){
                     $("#mainConsole").empty().append("<div id=\"placeholder\"></div>")
                     $("<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your mother calling for you in the distance. \"It's time you came back for dinner, " + player.name + "!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p><p>Type <b>help</b> for a list of commands</p>").fadeIn(200).insertBefore("#placeholder")
+                    currentArea = "nBog"
             },3500)
       }
 
