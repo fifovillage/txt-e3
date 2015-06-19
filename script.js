@@ -1,15 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 // initial zone info
 var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. You admire a bug in the bog water. There seems to be some light shining from the west.</p>"
-var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>Stone with mystical runes location</p>"
+var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>Stone with runes location</p>"
 var eBogInfo  = "<p>[Eastern Bog]<br>Zohar Location</p>"
 var cBogInfo  = "<p>[Central Bog]<br></p>"
 var sBogInfo  = "<p>[Southern Bog]<br></p>"
 var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
 var wBogInfo = "<p>[Western Bog]<br></p>"
-var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
+var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.<br></p>"
 var houseInfo = "<p>[Shack]<br></p>"
-var bogCampInfo = "<p>[Bog Camp]<br>A merchant stands there, looking cross-eyed.<br></p>"
+var bogCampInfo = "<p>[Bog Camp]<br>A dusty old merchant stands there, looking cross-eyed.<br></p>"
 var caveEntranceInfo = "<p>[Cave Entrance]<br></p>"
 var bugLairInfo = "<p>[Bug Lair]<br></p>"
 var bugHiveInfo = "<p>[Bug Hive]<br></p>"
@@ -98,24 +98,10 @@ function bogMerchant(input){
       for(var i = 0; i < bogMerchantItem.length; i++){
 
           var merch_item = bogMerchantItem[i].name.toLowerCase()
-var itemIndex = inventory.indexOf(bogMerchantItem[i])
+          var itemIndex = inventory.indexOf(bogMerchantItem[i])
 
           if(input.substring(4) == merch_item && player.currency >= bogMerchantItem[i].price){
 
-
-//         if(bogMerchantItem != undefined && bogMerchantItem[i].quantity > 0  && inventory.indexOf(bogMerchantItem[i]) > -1){
-//           console.log("merchant has more than one and you ahve one in your inventory. that' sall she wrote")
-//           // var itemIndex = inventory.indexOf(bogMerchantItem[i])
-//           // inventory[itemIndex]["quantity"] ++
-//           // bogMerchantItem[i].quantity --
-//           // player.currency -= bogMerchantItem[i].price
-//           // $("<p style='color:green;'>You purchased the final "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
-//           // console.log("merch_item " + merch_item)
-//           // console.log("index number " + itemIndex)
-//           // console.log("quantity inventory " + inventory[itemIndex]["quantity"])
-//           // console.log("quantity bogmerchant" + bogMerchantItem[i].quantity)
-//
-// }
 
           if(bogMerchantItem[i].quantity > 1){
                 bogMerchantItem[i].quantity -= 1
@@ -205,7 +191,7 @@ function refreshStatWindow(){
       $("#hp").append("Health: YOU DIED")
       $("#mp").append("Mana: YOU DIED")
       $("#xp").append("Exp: NONE YOU DIED")
-      $("#currency").append("Bill Fold: AI'NT NAM")
+      $("#currency").append("Bill Fold: AIN'T NAM")
   }else{
       $("#playerName").append(player.name)
       $("#lvl").append("Level " +player.level)
@@ -641,7 +627,7 @@ else if(input =="look" && currentArea == "bogCamp"){
         else if((input =="talk to merchant" || input=="talk merchant") && currentArea == "bogCamp" && bogShop == false){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             bogShop = true
-            $("<p>Welcome to em' shop! Type <b>list</b> to display items for sale, <b>buy [item]</b> to purchase and <b>sell [item]</b> to sell! If you're all done, <b>leave</b>!</p>").insertBefore("#placeholder")
+            $("<p>Dusty Vermiculite says, \"Welcome to em' shop! Type <b>list</b> to display items for sale, <b>buy [item]</b> to purchase and <b>sell [item]</b> to sell! If you're all done, <b>leave</b>!\"</p>").insertBefore("#placeholder")
         }
         else if(input =="list" && currentArea == "bogCamp" && bogShop == true){
           if(bogMerchantItem.length == 0){
