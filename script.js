@@ -78,7 +78,7 @@ var bogItem   = [
         {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35,
               description:"Could be used as a crude weapon.", value:1},
         {slot:"none", name:"Dead Bug", healing:20,
-              description:"Restores a small amount of health.", value:1}]
+              description:"Restores a small amount of health.", value:1, quantity: 1}]
 
 
 // bog merchant item stock
@@ -98,19 +98,36 @@ function bogMerchant(input){
       for(var i = 0; i < bogMerchantItem.length; i++){
 
           var merch_item = bogMerchantItem[i].name.toLowerCase()
+var itemIndex = inventory.indexOf(bogMerchantItem[i])
 
           if(input.substring(4) == merch_item && player.currency >= bogMerchantItem[i].price){
 
-              if(bogMerchantItem[i].quantity > 1){
+
+//         if(bogMerchantItem != undefined && bogMerchantItem[i].quantity > 0  && inventory.indexOf(bogMerchantItem[i]) > -1){
+//           console.log("merchant has more than one and you ahve one in your inventory. that' sall she wrote")
+//           // var itemIndex = inventory.indexOf(bogMerchantItem[i])
+//           // inventory[itemIndex]["quantity"] ++
+//           // bogMerchantItem[i].quantity --
+//           // player.currency -= bogMerchantItem[i].price
+//           // $("<p style='color:green;'>You purchased the final "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+//           // console.log("merch_item " + merch_item)
+//           // console.log("index number " + itemIndex)
+//           // console.log("quantity inventory " + inventory[itemIndex]["quantity"])
+//           // console.log("quantity bogmerchant" + bogMerchantItem[i].quantity)
+//
+// }
+
+          if(bogMerchantItem[i].quantity > 1){
                 bogMerchantItem[i].quantity -= 1
                 inventory.push(bogMerchantItem[i])
                 player.currency -= bogMerchantItem[i].price
                 $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
               }
               else if(bogMerchantItem[i].quantity <= 1){
-                  inventory.push(bogMerchantItem[i])
+                  // inventory.push(bogMerchantItem[i])
+                  inventory[itemIndex].quantity += 1
                   player.currency -= bogMerchantItem[i].price
-                  $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+                  $("<p style='color:green;'>You purchased the final "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
                   bogMerchantItem.splice(bogMerchantItem[i])
               }
           }
@@ -274,7 +291,7 @@ function lootDrop(enemy){
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// input section
+// input
 
 $(document).ready(function(){
 setInterval(refreshStatWindow, 100)
@@ -292,7 +309,8 @@ setInterval(refreshStatWindow, 100)
           player.name = input
           currentArea = "nBog"
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $("<p>So you are called " + input + ".</p><p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").fadeIn(3000).insertBefore("#placeholder")
+          $("<p>So you are called " + input + ".</p>").insertBefore("#placeholder")
+          $("<p>A BRIGHT LIGHT FILLS YOUR VISION...</p>").fadeIn(3000).insertBefore("#placeholder")
           setTimeout(
             function(){
                     $("#mainConsole").empty().append("<div id=\"placeholder\"></div>")
@@ -316,7 +334,7 @@ setInterval(refreshStatWindow, 100)
             if(inventory.length > 0){
               $("<p>Bottomless Bag:<br></p>").insertBefore("#placeholder")
               for(var i = 0; i < inventory.length; i++){
-                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"<br>---------"+inventory[i].description+"<br></p>").insertBefore("#placeholder")
+                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"&nbsp;&nbsp;&nbsp;&nbsp;Quantity: "+inventory[i].quantity+"<br>---------"+inventory[i].description+"<br></p>").insertBefore("#placeholder")
               }
             }else{
               $("<p>Your bag is empty.</p>").insertBefore("#placeholder")
