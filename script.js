@@ -319,7 +319,7 @@ function comBat(enemy){
       var player_combat =  setInterval(function(){
 
                       if(equipment.weapon == "unarmed"){
-                        var pdmg = Math.floor(Math.random()*1000+1)
+                        var pdmg = Math.floor(Math.random()*20+1)
                       }else{
                         var pdmg = Math.floor(Math.random()*(equipment.weapon.damage*10)+1)
                       }
