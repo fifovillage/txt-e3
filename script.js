@@ -19,14 +19,14 @@ var bugDenInfo = "<p>[Bug Den]<br></p>"
 // initial variables
 
 var inCombat = false
-var currentArea = "namePlayer"
+var currentArea = "bogCamp"
 
 var player    = {
        level: 1,
        hitpoints:242,
        mana:20,
        experience:0,
-       currency: 0,
+       currency: 50,
        name: ""
 }
 
@@ -84,10 +84,11 @@ var bogItem   = [
 // bog merchant item stock
 var bogMerchantItem = [
         {name:"Potion", description:"restores 100 health", price:5,
-              value:1, quantity:2}]
+              value:1, quantity:6}]
 
 
-// bog merchant function
+// bog camp merchant function
+//BUY
 function bogMerchant(input){
   if(input.substring(0, 3) == "buy"){
 
@@ -98,19 +99,28 @@ function bogMerchant(input){
       for(var i = 0; i < bogMerchantItem.length; i++){
 
           var merch_item = bogMerchantItem[i].name.toLowerCase()
-          var itemIndex = inventory.indexOf(bogMerchantItem[i])
 
           if(input.substring(4) == merch_item && player.currency >= bogMerchantItem[i].price){
 
+          var itemIndex = inventory.indexOf(bogMerchantItem[i])
 
-          if(bogMerchantItem[i].quantity > 1){
+          if(bogMerchantItem[i].quantity > 1 && inventory.indexOf(bogMerchantItem[i]) == -1){
                 bogMerchantItem[i].quantity -= 1
                 inventory.push(bogMerchantItem[i])
+                // inventory[inventory.length-1].quantity = 1
                 player.currency -= bogMerchantItem[i].price
                 $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
               }
+
+             else if(bogMerchantItem[i].quantity > 1 && inventory.indexOf(bogMerchantItem[i]) > -1){
+                    bogMerchantItem[i].quantity -= 1
+                    // inventory[inventory.indexOf(bogMerchantItem[i])].quantity += 1
+                    player.currency -= bogMerchantItem[i].price
+                    $("<p style='color:green;'>You purchased more the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+                  }
+
               else if(bogMerchantItem[i].quantity <= 1){
-                  // inventory.push(bogMerchantItem[i])
+                  itemIndex = inventory.indexOf(bogMerchantItem[i])
                   inventory[itemIndex].quantity += 1
                   player.currency -= bogMerchantItem[i].price
                   $("<p style='color:green;'>You purchased the final "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
@@ -126,6 +136,7 @@ function bogMerchant(input){
       }
   }
 //------------------------------------------------------------------------------
+// SELL
   else if(input.substring(0, 4) == "sell"){
     if(inventory.length == 0){
       $("<p>You have nothing in your inventory to sell.</p>").insertBefore("#placeholder")
