@@ -174,7 +174,6 @@ function bogMerchant(input){
             if(inventory[i].quantity == 1){
               $("<p style='color:lime;'>You sell the "+inventory[i].name+" for "+inventory[i].value+" platinum.</p>").insertBefore("#Bplaceholder")
               player.currency += inventory[i].value
-              console.log(inventory.indexOf(inventory[i]))
               inventory.splice(i, 1)
             }else{
               player.currency += inventory[i].value
