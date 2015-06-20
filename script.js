@@ -393,158 +393,150 @@ setInterval(refreshStatWindow, 100)
         }
 
 
-////////////////////////////////////////////////////////////////////////////////
-// NORTHERN BOG CONDITIONS[nBog]
+        ////////////////////////////////////////////////////////////////////////////////
+        // NORTHERN BOG CONDITIONS[nBog]
+                else if(input == "take bug" && currentArea == "nBog"){
+                  $("<p> >> "+input+"</p>").insertBefore("#placeholder")
 
-        else if((input == "take bug" || input == "get bug") && currentArea == "nBog"){
-          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    if(player.hitpoints <= 5 && bug == false){
+                      $("<p>One more time and that bug will kill you.</p>").insertBefore("#placeholder")
 
-            if(player.hitpoints <= 5 && bugDead == false){
-              $("<p>One more time and that bug will kill you.</p>").insertBefore("#placeholder")
+                    }else if(bug == false){
+                      $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
+                      player.hitpoints -= 5
+                    }else if(bug == true && inventory.indexOf(bogItem[1]) == -1){
+                      $("<p>You pick up the bug from the bog and place it in your bag.</p>").insertBefore("#placeholder")
+                      inventory.push(bogItem[1])
+                    }else if(bug == true && inventory.indexOf(bogItem[1]) > -1){
+                      $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
+                    }
+                }else if(input =="attack bug" && currentArea == "nBog" && bug == false){
+                  $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
+                  bug = true;
 
-            }else if(bugDead == false){
-              $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
-              player.hitpoints -= 5
-            }else if(bugDead == true && bugPickUp == false){
-              $("<p>You pick up the bug from the bog and place it in your bag.</p>").insertBefore("#placeholder")
-              inventory.push(bogItem[1])
-              bugPickUp = true
-              nBogInfo = nBogInfo.replace("You admire a bug in the bog water. ", "")
-            }else if(bugDead == true && bugPickUp == true){
-              $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
+
+        //look nBog
+                }else if(input =="look" && currentArea == "nBog"){
+                  $(nBogInfo).insertBefore("#placeholder")
+
+        //movement: northern bog
+
+                }else if((input =="west" || input =="w") && currentArea == "nBog"){
+                    currentArea = "wBogCoast"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(wBogCoastInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+
+                }else if((input =="east" || input =="e") && currentArea == "nBog"){
+                    currentArea = "eBogCoast"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(eBogCoastInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+
+                }else if((input =="south" || input =="s") && currentArea == "nBog"){
+                    currentArea = "cBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(cBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        //EASTERN BOG COAST CONDITIONS [eBogCoast]
+
+
+        //look eBogCoast
+                else if(input =="look" && currentArea == "eBogCoast"){
+                  $(eBogCoastInfo).insertBefore("#placeholder")
+                    }
+
+        //movement from eBogCoast
+                else if((input =="west" || input=="w") && currentArea == "eBogCoast"){
+                          currentArea = "nBog"
+                          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                          $(nBogInfo).insertBefore("#placeholder")
+                          randomEncounterBog()
+                      }
+                    else if((input =="south" || input=="s") && currentArea == "eBogCoast"){
+                        currentArea = "eBog"
+                        $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                        $(eBogInfo).insertBefore("#placeholder")
+                        randomEncounterBog()
+                    }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        //EASTERN BOG CONDITIONS [eBog]
+
+
+        //look eBog
+        else if(input =="look" && currentArea == "eBog"){
+          $(eBogInfo).insertBefore("#placeholder")
             }
-        }else if(input =="attack bug" && currentArea == "nBog" && bugDead == false){
-          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
-          bugDead = true;
 
+        //movement from eBog
+                else if((input =="north" || input=="n") && currentArea == "eBog"){
+                          currentArea = "eBogCoast"
+                          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                          $(eBogCoastInfo).insertBefore("#placeholder")
+                          randomEncounterBog()
+                      }
+                    else if((input =="west" || input=="w") && currentArea == "eBog"){
+                        currentArea = "cBog"
+                        $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                        $(cBogInfo).insertBefore("#placeholder")
+                        randomEncounterBog()
+                    }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        //WESTERN BOG COAST CONDITIONS [wBogCoast]
 
-//look nBog
-        }else if(input =="look" && currentArea == "nBog"){
-          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $(nBogInfo).insertBefore("#placeholder")
-
-//movement: northern bog
-}else if((input =="west" || input =="w") && currentArea == "nBog"){
-            currentArea = "wBogCoast"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(wBogCoastInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-
-        }else if((input =="east" || input =="e") && currentArea == "nBog"){
-            currentArea = "eBogCoast"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(eBogCoastInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-
-        }else if((input =="south" || input =="s") && currentArea == "nBog"){
-            currentArea = "cBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(cBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
+                else if(input =="examine sod" && currentArea == "wBogCoast"){
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $("<p>Here lays a fallen bug, its legs worn down to a crude edge by the waters of the bog and the passage of time. You may be able to use one of the legs as an improvised bog bug weapon.</p>").insertBefore("#placeholder")
+                    exsod = true
+                }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) == -1){
+                    inventory.push(bogItem[0])
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $("<p>You place the bog bug's leg into your bottomless bag.</p>").insertBefore("#placeholder")
+                }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) > -1){
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $("<p>You already have the bug's only salvageable leg.</p>").insertBefore("#placeholder")
         }
 
-////////////////////////////////////////////////////////////////////////////////
-//EASTERN BOG COAST CONDITIONS [eBogCoast]
+        //look wBogCoast
+              else if(input =="look" && currentArea == "wBogCoast"){
+                $(wBogCoastInfo).insertBefore("#placeholder")
+                  }
 
-
-//look eBogCoast
-        else if(input =="look" && currentArea == "eBogCoast"){
-          $(eBogCoastInfo).insertBefore("#placeholder")
-            }
-
-//movement from eBogCoast
-        else if((input =="west" || input=="w") && currentArea == "eBogCoast"){
-                  currentArea = "nBog"
+        //movement from wBogCoast
+          else if((input =="west" || input=="w") && currentArea == "wBogCoast"){
+                    currentArea = "houseFront"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(houseFrontInfo).insertBefore("#placeholder")
+                }
+          else if((input =="east" || input=="e") && currentArea == "wBogCoast"){
+                currentArea = "nBog"
                   $("<p> >> "+input+"</p>").insertBefore("#placeholder")
                   $(nBogInfo).insertBefore("#placeholder")
                   randomEncounterBog()
-              }
-            else if((input =="south" || input=="s") && currentArea == "eBogCoast"){
-                currentArea = "eBog"
-                $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                $(eBogInfo).insertBefore("#placeholder")
-                randomEncounterBog()
-            }
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//EASTERN BOG CONDITIONS [eBog]
-
-
-//look eBog
-else if(input =="look" && currentArea == "eBog"){
-  $(eBogInfo).insertBefore("#placeholder")
-    }
-
-//movement from eBog
-      else if(!inCombat){
-        if((input =="north" || input=="n") && currentArea == "eBog"){
-                  currentArea = "eBogCoast"
+                }
+            else if((input =="south" || input=="s") && currentArea == "wBogCoast"){
+                currentArea = "wBog"
                   $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                  $(eBogCoastInfo).insertBefore("#placeholder")
+                  $(wBogInfo).insertBefore("#placeholder")
                   randomEncounterBog()
-              }
-            else if((input =="west" || input=="w") && currentArea == "eBog"){
-                currentArea = "cBog"
-                $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                $(cBogInfo).insertBefore("#placeholder")
-                randomEncounterBog()
+                }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        //FRONT OF HOUSE CONDITIONS [houseFront]
+
+        //look houseFront
+        else if(input =="look" && currentArea == "houseFront"){
+          $(houseFrontInfo).insertBefore("#placeholder")
             }
-      }
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//WESTERN BOG COAST CONDITIONS [wBogCoast]
 
-        else if(input =="examine sod" && currentArea == "wBogCoast"){
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Here lays a fallen bug, its legs worn down to a crude edge by the waters of the bog and the passage of time. You may be able to use one of the legs as an improvised bog bug weapon.</p>").insertBefore("#placeholder")
-            exsod = true
-        }else if((input =="take leg" || input =="take bug leg" || input=="get leg" || input=="get bug leg") && exsod == true && inventory.indexOf(bogItem[0]) == -1){
-            inventory.push(bogItem[0])
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>You place the bog bug's leg into your bottomless bag.</p>").insertBefore("#placeholder")
-        }else if((input =="take leg" || input =="take bug leg") && exsod == true && inventory.indexOf(bogItem[0]) > -1){
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>You already have the bug's only salvageable leg.</p>").insertBefore("#placeholder")
-}
-
-//look wBogCoast
-      else if(input =="look" && currentArea == "wBogCoast"){
-        $(wBogCoastInfo).insertBefore("#placeholder")
-          }
-
-//movement from wBogCoast
-else if(!inCombat){
-    if((input =="west" || input=="w") && currentArea == "wBogCoast"){
-            currentArea = "houseFront"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(houseFrontInfo).insertBefore("#placeholder")
-        }
-  else if((input =="east" || input=="e") && currentArea == "wBogCoast"){
-        currentArea = "nBog"
-          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $(nBogInfo).insertBefore("#placeholder")
-          randomEncounterBog()
-        }
-    else if((input =="south" || input=="s") && currentArea == "wBogCoast"){
-        currentArea = "wBog"
-          $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-          $(wBogInfo).insertBefore("#placeholder")
-          randomEncounterBog()
-        }
-}
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//FRONT OF HOUSE CONDITIONS [houseFront]
-
-//look houseFront
-else if(input =="look" && currentArea == "houseFront"){
-  $(houseFrontInfo).insertBefore("#placeholder")
-    }
-
-//movement at House Front
-      else if(!inCombat){
-        if((input =="west" || input=="w") && currentArea == "houseFront" && houseBlock == false){
+        //movement at House Front
+      else  if((input =="west" || input=="w") && currentArea == "houseFront" && houseBlock == false){
           currentArea = "house"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(houseInfo).insertBefore("#placeholder")
@@ -557,108 +549,102 @@ else if(input =="look" && currentArea == "houseFront"){
           currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(wBogCoastInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-}
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// MAMA HOUSE CONDITIONS [house]
+          }
 
-//look house
-else if(input =="look" && currentArea == "house"){
-  $(houseInfo).insertBefore("#placeholder")
-    }
-//movement at house
-        else if((input =="east" || input=="e") && currentArea == "house"){
-          currentArea = "houseFront"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(houseFrontInfo).insertBefore("#placeholder")
-        }
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// WEST BOG CONDITIONS [wBog]
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // MAMA HOUSE CONDITIONS [house]
 
-//look wBog
-else if(input =="look" && currentArea == "wBog"){
-  $(wBogInfo).insertBefore("#placeholder")
-    }
+        //look house
+        else if(input =="look" && currentArea == "house"){
+          $(houseInfo).insertBefore("#placeholder")
+            }
+        //movement at house
+                else if((input =="east" || input=="e") && currentArea == "house"){
+                  currentArea = "houseFront"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(houseFrontInfo).insertBefore("#placeholder")
+                }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // WEST BOG CONDITIONS [wBog]
 
-//movement at west bog
-      else if(!inCombat){
-        if((input =="east" || input=="e") && currentArea == "wBog"){
-          currentArea = "cBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(cBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-        else if((input =="north" || input=="n") && currentArea == "wBog"){
-          currentArea = "wBogCoast"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(wBogCoastInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-}
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// CENTRAL BOG CONDITIONS [cBog]
+        //look wBog
+        else if(input =="look" && currentArea == "wBog"){
+          $(wBogInfo).insertBefore("#placeholder")
+            }
+
+        //movement at west bog
+                else if((input =="east" || input=="e") && currentArea == "wBog"){
+                  currentArea = "cBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(cBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+                else if((input =="north" || input=="n") && currentArea == "wBog"){
+                  currentArea = "wBogCoast"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(wBogCoastInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // CENTRAL BOG CONDITIONS [cBog]
 
 
-//look for CbOG
-else if(input =="look" && currentArea == "cBog"){
-  $(cBogInfo).insertBefore("#placeholder")
-    }
+        //look for CbOG
+        else if(input =="look" && currentArea == "cBog"){
+          $(cBogInfo).insertBefore("#placeholder")
+            }
 
-//movement at central bog
-      else if(!inCombat){
-        if((input =="north" || input=="n") && currentArea == "cBog"){
-          currentArea = "nBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(nBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-        else if((input =="south" || input=="s") && currentArea == "cBog"){
-          currentArea = "sBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(sBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-        else if((input =="east" || input=="e") && currentArea == "cBog"){
-          currentArea = "eBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(eBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-        else if((input =="west" || input=="w") && currentArea == "cBog"){
-          currentArea = "wBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(wBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-      }
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// SOUTH BOG CONDITIONS [sBog]
+        //movement at central bog
+                else if((input =="north" || input=="n") && currentArea == "cBog"){
+                  currentArea = "nBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(nBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+                else if((input =="south" || input=="s") && currentArea == "cBog"){
+                  currentArea = "sBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(sBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+                else if((input =="east" || input=="e") && currentArea == "cBog"){
+                  currentArea = "eBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(eBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+                else if((input =="west" || input=="w") && currentArea == "cBog"){
+                  currentArea = "wBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(wBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // SOUTH BOG CONDITIONS [sBog]
 
 
-//look for sbOg
-else if(input =="look" && currentArea == "sBog"){
-  $(sBogInfo).insertBefore("#placeholder")
-    }
+        //look for sbOg
+        else if(input =="look" && currentArea == "sBog"){
+          $(sBogInfo).insertBefore("#placeholder")
+            }
 
-//movement at central bog
-      else if(!inCombat){
-        if((input =="north" || input=="n") && currentArea == "sBog"){
-          currentArea = "cBog"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(cBogInfo).insertBefore("#placeholder")
-            randomEncounterBog()
-        }
-        else if((input =="south" || input=="s") && currentArea == "sBog"){
-          currentArea = "bogCamp"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(bogCampInfo).insertBefore("#placeholder")
-        }
-}
+        //movement at central bog
+                else if((input =="north" || input=="n") && currentArea == "sBog"){
+                  currentArea = "cBog"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(cBogInfo).insertBefore("#placeholder")
+                    randomEncounterBog()
+                }
+                else if((input =="south" || input=="s") && currentArea == "sBog"){
+                  currentArea = "bogCamp"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(bogCampInfo).insertBefore("#placeholder")
+                }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // BOG CAMP CONDITIONS [bogCamp]
@@ -691,10 +677,12 @@ else if(input =="look" && currentArea == "bogCamp"){
           if(bogMerchantItem.length == 0){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p style='color:white;'>There are no items left in stock.</p>").insertBefore("#Bplaceholder")
+
           }
           else{
             for(var i = 0; i < bogMerchantItem.length; i++){
                 $("<p style='color:white;'>--"+bogMerchantItem[i].name+"<br>----"+bogMerchantItem[i].description+"<br>Price: "+bogMerchantItem[i].price+" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stock: "+bogMerchantItem[i].quantity+"</p>").insertBefore("#Bplaceholder")
+                $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
             }
           }
         }
@@ -707,16 +695,16 @@ else if(input =="look" && currentArea == "bogCamp"){
             $("<p>Thanks for shopping!</p>").insertBefore("#placeholder")
         }
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// CAVE ENTRANCE CONDITIONS [caveEntrance]
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // CAVE ENTRANCE CONDITIONS [caveEntrance]
 
-//look for caveEntrance
-else if(input =="look" && currentArea == "caveEntrance"){
-  $(caveEntranceInfo).insertBefore("#placeholder")
-    }
+        //look for caveEntrance
+        else if(input =="look" && currentArea == "caveEntrance"){
+          $(caveEntranceInfo).insertBefore("#placeholder")
+            }
 
-//movement at cave entrance
+        //movement at cave entrance
         else if((input =="east" || input=="e") && currentArea == "caveEntrance" && bugLairBlock == true){
           $("<p> >> "+input+"</p>").insertBefore("#placeholder")
           $("<p>You bust into a blockade.</p>").insertBefore("#placeholder")
@@ -736,83 +724,79 @@ else if(input =="look" && currentArea == "caveEntrance"){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(bugLairInfo).insertBefore("#placeholder")
         }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // BUG LAIR CONDITIONS [bugLair]
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// BUG LAIR CONDITIONS [bugLair]
-
-//look for bugLair
-else if(input =="look" && currentArea == "bugLair"){
-  $(bugLairInfo).insertBefore("#placeholder")
-    }
-//movement at bug lair
-      else if(!inCombat){
-        if((input =="west" || input=="w") && currentArea == "bugLair"){
-          currentArea = "caveEntrance"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(caveEntranceInfo).insertBefore("#placeholder")
-        }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// BUG DEN CONDITIONS [bugDen]
+        //look for bugLair
+        else if(input =="look" && currentArea == "bugLair"){
+          $(bugLairInfo).insertBefore("#placeholder")
+            }
+        //movement at bug lair
+                else if((input =="west" || input=="w") && currentArea == "bugLair"){
+                  currentArea = "caveEntrance"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(caveEntranceInfo).insertBefore("#placeholder")
+                }
+                else if((input =="east" || input=="e") && currentArea == "bugLair"){
+                  currentArea = "bugDen"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(bugDenInfo).insertBefore("#placeholder")
+                }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // BUG DEN CONDITIONS [bugDen]
 
 
-//look bugDen
-else if(input =="look" && currentArea == "bugDen"){
-  $(bugDenInfo).insertBefore("#placeholder")
-    }
+        //look bugDen
+        else if(input =="look" && currentArea == "bugDen"){
+          $(bugDenInfo).insertBefore("#placeholder")
+            }
 
-//movement at bug den
-      else if(!inCombat){
-        if((input =="east" || input=="e") && currentArea == "bugDen"){
-          currentArea = "bugHive"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(bugHiveInfo).insertBefore("#placeholder")
-        }
-        else if((input =="west" || input=="w") && currentArea == "bugDen"){
-          currentArea = "bugLair"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(bugLairInfo).insertBefore("#placeholder")
-        }
-    }
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-// BUG HIVE CONDITIONS [bugHive]
+        //movement at bug den
+                else if((input =="east" || input=="e") && currentArea == "bugDen"){
+                  currentArea = "bugHive"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(bugHiveInfo).insertBefore("#placeholder")
+                }
+                else if((input =="west" || input=="w") && currentArea == "bugDen"){
+                  currentArea = "bugLair"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(bugLairInfo).insertBefore("#placeholder")
+                }
+        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // BUG HIVE CONDITIONS [bugHive]
 
-//look at bug hive
-else if(input =="look" && currentArea == "bugHive"){
-  $(bugHiveInfo).insertBefore("#placeholder")
-    }
+        //look at bug hive
+        else if(input =="look" && currentArea == "bugHive"){
+          $(bugHiveInfo).insertBefore("#placeholder")
+            }
 
-//movement at bug Hive
+        //movement at bug Hive
+                else if((input =="west" || input=="w") && currentArea == "bugHive"){
+                  currentArea = "bugDen"
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $(bugDenInfo).insertBefore("#placeholder")
+                }
+        ////////////////////////////////////////////////////////////////////////////////
+        // death condition
+                else if(player.hitpoints <= 0){
+                    $("<p>YOU DEAD</p>").insertBefore("#placeholder")
+                }
 
-      else  if((input =="west" || input=="w") && currentArea == "bugHive"){
-          currentArea = "bugDen"
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $(bugDenInfo).insertBefore("#placeholder")
-        }
+        // wrong command condition
+                else{
+                    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+                    $("<p>I don't understand "+input+".</p>").insertBefore("#placeholder")
+                }
+              }
 
-////////////////////////////////////////////////////////////////////////////////
-// death condition
-        else if(player.hitpoints <= 0){
-            $("<p>YOU DEAD</p>").insertBefore("#placeholder")
-        }
+        //empty out the command line
+              $("#cmdLine").val("");
 
-// wrong command condition
-        else{
-            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>I don't understand "+input+".</p>").insertBefore("#placeholder")
-        }
-      }
+        //scroll to the bottom
+              $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight);
+            })
 
-//empty out the command line
-      $("#cmdLine").val("");
-
-//scroll to the bottom
-      $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight);
-      $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
-    })
-
-});
+        });
