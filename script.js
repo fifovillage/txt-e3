@@ -1,15 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 // initial zone info
-var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. After admiring a bug in the bog water, you hear your Mother calling for you in the distance. \"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make the long slog through the bog in time. There seems to be some light shining from the west.</p>"
+var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. "
+                +"After admiring a bug in the bog water, you hear your Mother calling for you in the distance. "
+                +"\"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make "
+                +"the long slog through the bog in time. There seems to be some light shining from the west.</p>"
+//--------------------------------------------------
 var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
 var eBogInfo  = "<p>[Eastern Bog]<br></p>"
-var cBogInfo  = "<p>[Central Bog]<br></p>"
+var cBogInfo  = "<p>[Central Bog]<br>Looking around, the bog appears to extend in every direction. "
+                +"The murky bog water pools in the center of the area, surrounded by a thick muck. Tufts of "
+                +"moss spot the damp stones and tree trunks. Darkness seems to extend all around you. "
+                +"The claustrophobia of the bog is near overwhelming.</p>"
 var sBogInfo  = "<p>[Southern Bog]<br></p>"
-var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading south in the mud of the bog.</p>"
+//--------------------------------------------------
+var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. "
+                +"The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye "
+                +"from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading "
+                +"south in the mud of the bog.</p>"
+//--------------------------------------------------
 var wBogInfo = "<p>[Western Bog]<br></p>"
 var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.</p>"
 var houseInfo = "<p>[Shack]<br></p>"
-var bogCampInfo = "<p>[Bog Camp]Merchant Location<br></p>"
+var bogCampInfo = "<p>[Bog Camp]<br>Merchant Location</p>"
 var caveEntranceInfo = "<p>[Cave Entrance]<br></p>"
 var bugLairInfo = "<p>[Bug Lair]<br></p>"
 var bugHiveInfo = "<p>[Bug Hive]<br></p>"
@@ -59,17 +71,17 @@ var bogShop = false
 // bog bestiary
 var bogEnemy  = [
         {name:"bug", health  :75, damage:1, delay:20, exp :15,
-              loot:[{name:"Fire Beetle Eye", description:"poop", value:2},
-                    {name:"Bug Wing", description:"poop", value:1},
-                    {name:"Bug Stinger", description:"poop", value:1}]},
+              loot:[{name:"Fire Beetle Eye", description:"The radiant eye of a bug.", value:2},
+                    {name:"Bug Wing", description:"A transparent bug flapper.", value:1},
+                    {name:"Bug Stinger", description:"Pointy end of the butt.", value:1}]},
         {name:"snake", health:100, damage:2, delay:25, exp:20,
-              loot:[{name:"Snake Legs", description:"poop", value:2},
-                    {name:"Snake Venom", description:"poop", value:2},
-                    {name:"Half-Digested Bug", description:"poop", value:1}]},
+              loot:[{name:"Snake Legs", description:"The microscopic atrophied legs of a snake.", value:2},
+                    {name:"Snake Venom", description:"The bog natives call it juice.", value:2},
+                    {name:"Half-Digested Bug", description:"You killed the snake before it finished eating.", value:1}]},
         {name:"crab", health :150, damage:5, delay:50, exp:30,
-              loot:[{name:"Crab Meat", description:"poop", value:1},
-                    {name:"Broken Crab Leg", description:"poop", value:1},
-                    {name:"Crab Eggs", description:"poop", value:3}]}]
+              loot:[{name:"Crab Meat", description:"Bugs are very attracted to its scent.", value:1},
+                    {name:"Broken Crab Leg", description:"More useless than the snake leg.", value:1},
+                    {name:"Crab Eggs", description:"A bundle of slimy crustacean eggs.", value:3}]}]
 
 // bog item list
 var bogItem   = [
@@ -88,6 +100,7 @@ var bogMerchantItem = [
 // bog merchant function
 function bogMerchant(input){
   if(input.substring(0, 3) == "buy"){
+    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
 
     if(bogMerchantItem.length == 0){
       $("<p>You bought everything I had to sell! Thanks bubby!</p>").insertBefore("#placeholder")
@@ -122,6 +135,8 @@ function bogMerchant(input){
   }
 //------------------------------------------------------------------------------
   else if(input.substring(0, 4) == "sell"){
+    $("<p> >> "+input+"</p>").insertBefore("#placeholder")
+
     if(inventory.length == 0){
       $("<p>You have nothing in your inventory to sell.</p>").insertBefore("#placeholder")
     }
@@ -553,6 +568,7 @@ setInterval(refreshStatWindow, 100)
         }
         else if(input =="list" && currentArea == "bogCamp" && bogShop == true){
           if(bogMerchantItem.length == 0){
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p style='color:white;'>There are no items left in stock.</p>").insertBefore("#Bplaceholder")
           }
           else{
@@ -566,6 +582,7 @@ setInterval(refreshStatWindow, 100)
         }
         else if(input =="leave" && currentArea =="bogCamp" && bogShop == true){
             bogShop = false
+            $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $("<p>Thanks for shopping!</p>").insertBefore("#placeholder")
         }
 
