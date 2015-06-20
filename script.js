@@ -425,8 +425,7 @@ setInterval(refreshStatWindow, 100)
           $(nBogInfo).insertBefore("#placeholder")
 
 //movement: northern bog
-}else if(!inCombat){
-        if((input =="west" || input =="w") && currentArea == "nBog"){
+}else if((input =="west" || input =="w") && currentArea == "nBog"){
             currentArea = "wBogCoast"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(wBogCoastInfo).insertBefore("#placeholder")
@@ -444,7 +443,7 @@ setInterval(refreshStatWindow, 100)
             $(cBogInfo).insertBefore("#placeholder")
             randomEncounterBog()
         }
-}
+
 ////////////////////////////////////////////////////////////////////////////////
 //EASTERN BOG COAST CONDITIONS [eBogCoast]
 
@@ -455,8 +454,7 @@ setInterval(refreshStatWindow, 100)
             }
 
 //movement from eBogCoast
-        else if(!inCombat){
-             if((input =="west" || input=="w") && currentArea == "eBogCoast"){
+        else if((input =="west" || input=="w") && currentArea == "eBogCoast"){
                   currentArea = "nBog"
                   $("<p> >> "+input+"</p>").insertBefore("#placeholder")
                   $(nBogInfo).insertBefore("#placeholder")
@@ -468,7 +466,6 @@ setInterval(refreshStatWindow, 100)
                 $(eBogInfo).insertBefore("#placeholder")
                 randomEncounterBog()
             }
-         }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //EASTERN BOG CONDITIONS [eBog]
@@ -790,13 +787,13 @@ else if(input =="look" && currentArea == "bugHive"){
     }
 
 //movement at bug Hive
-      else if(!inCombat){
-        if((input =="west" || input=="w") && currentArea == "bugHive"){
+
+      else  if((input =="west" || input=="w") && currentArea == "bugHive"){
           currentArea = "bugDen"
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
             $(bugDenInfo).insertBefore("#placeholder")
         }
-      }
+
 ////////////////////////////////////////////////////////////////////////////////
 // death condition
         else if(player.hitpoints <= 0){
