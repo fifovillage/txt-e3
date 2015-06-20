@@ -1,6 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 // initial zone info
-<<<<<<< HEAD
 var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. "
                 +"After admiring a bug in the bog water, you hear your Mother calling for you in the distance. "
                 +"\"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make "
