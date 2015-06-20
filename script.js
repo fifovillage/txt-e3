@@ -19,14 +19,14 @@ var bugDenInfo = "<p>[Bug Den]<br></p>"
 // initial variables
 
 var inCombat = false
-var currentArea = "bogCamp"
+var currentArea = "namePlayer"
 
 var player    = {
        level: 1,
        hitpoints:242,
        mana:20,
        experience:0,
-       currency: 50,
+       currency: 0,
        name: ""
 }
 
@@ -84,7 +84,7 @@ var bogItem   = [
 // bog merchant item stock
 var bogMerchantItem = [
         {name:"Potion", description:"restores 100 health", price:5,
-              value:1, quantity:6}]
+              value:1, quantity:2}]
 
 
 // bog camp merchant function
