@@ -4,7 +4,7 @@ var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the b
                 +"After admiring a bug in the bog water, you hear your Mother calling for you in the distance. "
                 +"\"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make "
                 +"the long slog through the bog in time. There seems to be some light shining from the west.</p>"
-//--------------------------------------------------
+//-------------------------------------------------
 var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
 var eBogInfo  = "<p>[Eastern Bog]<br></p>"
 var cBogInfo  = "<p>[Central Bog]<br>Looking around, the bog appears to extend in every direction. "
@@ -71,30 +71,30 @@ var bogShop = false
 // bog bestiary
 var bogEnemy  = [
         {name:"bug", health  :75, damage:1, delay:20, exp :15,
-              loot:[{name:"Fire Beetle Eye", description:"The radiant eye of a bug.", value:2},
-                    {name:"Bug Wing", description:"A transparent bug flapper.", value:1},
-                    {name:"Bug Stinger", description:"Pointy end of the butt.", value:1}]},
+              loot:[{name:"Fire Beetle Eye", description:"The radiant eye of a bug.", value:2, quantity:1},
+                    {name:"Bug Wing", description:"A transparent bug flapper.", value:1, quantity:1},
+                    {name:"Bug Stinger", description:"Pointy end of the butt.", value:1, quantity:1}]},
         {name:"snake", health:100, damage:2, delay:25, exp:20,
-              loot:[{name:"Snake Legs", description:"The microscopic atrophied legs of a snake.", value:2},
-                    {name:"Snake Venom", description:"The bog natives call it juice.", value:2},
-                    {name:"Half-Digested Bug", description:"You killed the snake before it finished eating.", value:1}]},
+              loot:[{name:"Snake Legs", description:"The microscopic atrophied legs of a snake.", value:2, quantity:1},
+                    {name:"Snake Venom", description:"The bog natives call it juice.", value:2, quantity:1},
+                    {name:"Half-Digested Bug", description:"You killed the snake before it finished eating.", value:1, quantity:1}]},
         {name:"crab", health :150, damage:5, delay:50, exp:30,
-              loot:[{name:"Crab Meat", description:"Bugs are very attracted to its scent.", value:1},
-                    {name:"Broken Crab Leg", description:"More useless than the snake leg.", value:1},
-                    {name:"Crab Eggs", description:"A bundle of slimy crustacean eggs.", value:3}]}]
+              loot:[{name:"Crab Meat", description:"Bugs are very attracted to its scent.", value:1, quantity:1},
+                    {name:"Broken Crab Leg", description:"More useless than the snake leg.", value:1, quantity:1},
+                    {name:"Crab Eggs", description:"A bundle of slimy crustacean eggs.", value:3, quantity:1}]}]
 
 // bog item list
 var bogItem   = [
         {slot:"primary", name:"Razor Sharp Bug Leg", damage:5, delay:35,
-              description:"Could be used as a crude weapon.", value:1},
+              description:"Could be used as a crude weapon.", value:1, quantity:1},
         {slot:"none", name:"Dead Bug", healing:20,
-              description:"Restores a small amount of health.", value:1}]
+              description:"Restores a small amount of health.", value:1, quantity:1}]
 
 
 // bog merchant item stock
 var bogMerchantItem = [
         {name:"Potion", description:"restores 100 health", price:5,
-              value:1, quantity:2}]
+              value:1, quantity:6}]
 
 
 // bog merchant function
@@ -107,22 +107,47 @@ function bogMerchant(input){
     }
 
       for(var i = 0; i < bogMerchantItem.length; i++){
-
+          var new_item = $.extend( {}, bogMerchantItem[i])
+          var inv_spot = inventory.map(function(e) { return e.name; }).indexOf(bogMerchantItem[i].name)
           var merch_item = bogMerchantItem[i].name.toLowerCase()
 
           if(input.substring(4) == merch_item && player.currency >= bogMerchantItem[i].price){
 
               if(bogMerchantItem[i].quantity > 1){
-                bogMerchantItem[i].quantity -= 1
-                inventory.push(bogMerchantItem[i])
-                player.currency -= bogMerchantItem[i].price
-                $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
-              }
-              else if(bogMerchantItem[i].quantity <= 1){
-                  inventory.push(bogMerchantItem[i])
+                if(inventory.filter(function(e) { return e.name == bogMerchantItem[i].name; }).length == 0){
+
+
+                  bogMerchantItem[i].quantity -= 1
+                  inventory.push(new_item)
+                  inventory[inventory.indexOf(new_item)].quantity = 1
                   player.currency -= bogMerchantItem[i].price
                   $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
-                  bogMerchantItem.splice(bogMerchantItem[i])
+                }else{
+                  bogMerchantItem[i].quantity -= 1
+                  inventory[inv_spot].quantity += 1
+                  player.currency -= bogMerchantItem[i].price
+                  $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+                }
+
+              }
+              else if(bogMerchantItem[i].quantity == 1){
+
+                if(inventory.filter(function(e) { return e.name == bogMerchantItem[i].name; }).length == 0){
+
+                  bogMerchantItem[i].quantity -= 1
+                  inventory.push(bogMerchantItem[i])
+                  inventory[inventory.length -1][0].quantity = 1
+                  player.currency -= bogMerchantItem[i].price
+                  $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+                  bogMerchantItem.splice(i, 1)
+                }else{
+
+                  bogMerchantItem[i].quantity -= 1
+                  inventory[inv_spot].quantity += 1
+                  player.currency -= bogMerchantItem[i].price
+                  $("<p style='color:green;'>You purchased the "+bogMerchantItem[i].name+".</p>").insertBefore("#Bplaceholder")
+                  bogMerchantItem.splice(i, 1)
+                }
               }
           }
           else if(input.substring(4) == merch_item && player.currency < bogMerchantItem[i].price){
@@ -146,9 +171,16 @@ function bogMerchant(input){
           var item_name = inventory[i].name.toLowerCase()
 
           if(input.substring(5) == item_name){
+            if(inventory[i].quantity == 1){
               $("<p style='color:lime;'>You sell the "+inventory[i].name+" for "+inventory[i].value+" platinum.</p>").insertBefore("#Bplaceholder")
               player.currency += inventory[i].value
-              inventory.splice(inventory[i], 1)
+              console.log(inventory.indexOf(inventory[i]))
+              inventory.splice(i, 1)
+            }else{
+              player.currency += inventory[i].value
+              inventory[i].quantity -= 1
+              $("<p style='color:lime;'>You sell the "+inventory[i].name+" for "+inventory[i].value+" platinum.</p>").insertBefore("#Bplaceholder")
+            }
           }
 
       }
@@ -239,7 +271,7 @@ function comBat(enemy){
       var player_combat =  setInterval(function(){
 
                       if(equipment.weapon == "unarmed"){
-                        var pdmg = Math.floor(Math.random()*20+1)
+                        var pdmg = Math.floor(Math.random()*1000+1)
                       }else{
                         var pdmg = Math.floor(Math.random()*(equipment.weapon.damage*10)+1)
                       }
@@ -279,9 +311,15 @@ function lootDrop(enemy){
   var ran = Math.floor(Math.random()*3)
   var item_drop = enemy.loot[ran]
 
-  inventory.push(item_drop)
-  $("<p>You received "+item_drop.name+" and "+money+" platinum from the fallen "+enemy.name+".</p>").insertBefore("#placeholder")
-  $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
+  if(inventory.filter(function(e) { return e.name == item_drop.name; }).length == 0){
+    inventory.push(item_drop)
+    $("<p>You received "+item_drop.name+" and "+money+" platinum from the fallen "+enemy.name+".</p>").insertBefore("#placeholder")
+    $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
+  }else{
+    inventory[inventory.map(function(e) { return e.name; }).indexOf(item_drop.name)].quantity += 1
+    $("<p>You received "+item_drop.name+" and "+money+" platinum from the fallen "+enemy.name+".</p>").insertBefore("#placeholder")
+    $("#mainConsole").scrollTop($("#mainConsole")[0].scrollHeight)
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -307,7 +345,7 @@ setInterval(refreshStatWindow, 100)
             if(inventory.length > 0){
               $("<p>Bottomless Bag:<br></p>").insertBefore("#placeholder")
               for(var i = 0; i < inventory.length; i++){
-                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"<br>---------"+inventory[i].description+"<br></p>").insertBefore("#placeholder")
+                  $("<p>Slot ["+(i+1)+"] -- "+inventory[i].name+"<br>----"+inventory[i].description+" | qty:"+inventory[i].quantity+"<br></p>").insertBefore("#placeholder")
               }
             }else{
               $("<p>Your bag is empty.</p>").insertBefore("#placeholder")
