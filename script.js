@@ -116,7 +116,6 @@ function bogMerchant(input){
 
           if(input.substring(4) == merch_item && player.currency >= bogMerchantItem[i].price){
 
-<<<<<<< HEAD
               if(bogMerchantItem[i].quantity > 1){
                 if(inventory.filter(function(e) { return e.name == bogMerchantItem[i].name; }).length == 0){
 
