@@ -3,7 +3,8 @@ body{
 }
 
 #statwindow{
-  font-family: tahoma;
+  font-family: VT323;
+  font-size: 125%;
   width: 200px;
 }
 
@@ -16,7 +17,7 @@ body{
   height:50%;
   width:50%;
   font-family: tahoma;
-  font-size:95%;
+  font-size: 95%;
   left:20%;
   top:20%;
 }
@@ -46,6 +47,7 @@ body{
 }
 
 #cmdLine{
+  font-family: tahoma;
   background-color:black;
   width: 101%;
   color:white;
