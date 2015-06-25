@@ -3,9 +3,11 @@
 var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. "
                 +"After admiring a bug in the bog water, you hear your Mother calling for you in the distance. "
                 +"\"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make "
-                +"the long slog through the bog in time. There seems to be some light shining from the west.</p>"
-var eBogCoastInfo = "<p>[Eastern Bog Coast]<br></p>"
-var eBogInfo  = "<p>[Eastern Bog]<br></p>"
+                +"the long slog through the bog in time. There  seems to be some light shining from the west.</p>"
+var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>Basketball Goal</p>"
+var eBogInfo  = "<p>[Eastern Bog]<br>You approach a bonfire blazing brightly at the brink of the bog. A man bound to a "
+                +"stalk sways gently in the breeze. He mumbles something unintelligible. The bristling brush of bean " +"blossoms blocks your body from slogging deeper into the bog. A deafening cacophony of snake and "
+                +"crab calls surrounds you.</p>"
 var cBogInfo  = "<p>[Central Bog]<br>Looking around, the bog appears to extend in every direction. "
                 +"The murky bog water pools in the center of the area, surrounded by a thick muck. Tufts of "
                 +"moss spot the damp stones and tree trunks. Darkness seems to extend all around you. "
@@ -15,13 +17,13 @@ var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log,
                 +"The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye "
                 +"from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading "
                 +"south in the mud of the bog.</p>"
-var wBogInfo = "<p>[Western Bog]<br></p>"
-var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home.<br></p>"
+var wBogInfo = "<p>[Western Bog]<br>Stone of odd carvings</p>"
+var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home. <br></p>"
 var houseInfo = "<p>[Shack]<br></p>"
 var bogCampInfo = "<p>[Bog Camp]<br>A merchant stands there, looking cross-eyed.<br></p>"
 var caveEntranceInfo = "<p>[Cave Entrance]<br></p>"
 var bugLairInfo = "<p>[Bug Lair]<br></p>"
-var bugHiveInfo = "<p>[Bug Hive]<br></p>"
+var bugHiveInfo = "<p>[Bug Hive]<br>Mother location</p>"
 var bugDenInfo = "<p>[Bug Den]<br></p>"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +31,7 @@ var bugDenInfo = "<p>[Bug Den]<br></p>"
 
 var inCombat = false
 var currentArea = "namePlayer"
+var move_count = -1
 
 var player    = {
        level: 1,
@@ -77,7 +80,7 @@ var bogEnemy  = [
               loot:[{name:"Snake Legs", description:"The microscopic atrophied legs of a snake.", value:2, quantity:1},
                     {name:"Snake Venom", description:"The bog natives call it juice.", value:2, quantity:1},
                     {name:"Half-Digested Bug", description:"You killed the snake before it finished eating.", value:1, quantity:1}]},
-        {name:"crab", health :150, damage:5, delay:50, exp:30,
+        {name:"crab", health :125, damage:4, delay:50, exp:30,
               loot:[{name:"Crab Meat", description:"Bugs are very attracted to its scent.", value:1, quantity:1},
                     {name:"Broken Crab Leg", description:"More useless than the snake leg.", value:1, quantity:1},
                     {name:"Crab Eggs", description:"A bundle of slimy crustacean eggs.", value:3, quantity:1}]}]
@@ -332,10 +335,11 @@ setInterval(refreshStatWindow, 100)
 
     $("form").submit(function(){
       var input = $("#cmdLine").val().toLowerCase();
+      move_count ++
+      console.log('move #' + move_count)
 
 
-      if(player.hitpoints > 0){
-
+if(player.hitpoints > 0){
 ////////////////////////////////////////////////////////////////////////////////
 // NAME PLAYER
 
@@ -362,12 +366,22 @@ setInterval(refreshStatWindow, 100)
 
         else if(input == "help" && currentArea != null){
             $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Here go a list of commands:<br>(n)orth / (s)outh / (e)ast / (w)est<br>look<br>get/take [object]<br>examine [object]<br>attack [object/person/creature]<br>talk to [object/person/creature]<br>inventory<br>use [inventory item]<br>equip [weapon]<br></p>").insertBefore("#placeholder")
+            $("<p>Here go a list of commands:"
+            +"<br>(n)orth / (s)outh / (e)ast / (w)est"
+            +"<br>look<br>get/take [object]"
+            +"<br>examine [object]"
+            +"<br>attack [object/person/creature]"
+            +"<br>talk to [object/person/creature]"
+            +"<br>inventory"
+            +"<br>use [object/inventory item]"
+            +"<br>use [object/inventory item] on [object/inventory item]"
+            +"<br>equip [weapon]"
+            +"</p>").insertBefore("#placeholder")
 
 ////////////////////////////////////////////////////////////////////////////////
 //INVENTORY COMMANDS
 
-        }else if(input =="inventory"){
+        }else if(input =="inventory" && currentArea != null){
             if(inventory.length > 0){
               $("<p>Bottomless Bag:<br></p>").insertBefore("#placeholder")
               for(var i = 0; i < inventory.length; i++){
@@ -398,21 +412,21 @@ setInterval(refreshStatWindow, 100)
                 else if(input == "take bug" && currentArea == "nBog"){
                   $("<p> >> "+input+"</p>").insertBefore("#placeholder")
 
-                    if(player.hitpoints <= 5 && bug == false){
+                    if(player.hitpoints <= 5 && bugDead == false){
                       $("<p>One more time and that bug will kill you.</p>").insertBefore("#placeholder")
 
-                    }else if(bug == false){
+                    }else if(bugDead == false){
                       $("<p>The bug bit you for 5 damage!</p>").insertBefore("#placeholder")
                       player.hitpoints -= 5
-                    }else if(bug == true && inventory.indexOf(bogItem[1]) == -1){
+                    }else if(bugDead == true && inventory.indexOf(bogItem[1]) == -1){
                       $("<p>You pick up the bug from the bog and place it in your bag.</p>").insertBefore("#placeholder")
                       inventory.push(bogItem[1])
-                    }else if(bug == true && inventory.indexOf(bogItem[1]) > -1){
+                    }else if(bugDead == true && inventory.indexOf(bogItem[1]) > -1){
                       $("<p>You already picked up the bug.</p>").insertBefore("#placeholder")
                     }
-                }else if(input =="attack bug" && currentArea == "nBog" && bug == false){
+                }else if(input =="attack bug" && currentArea == "nBog" && bugDead == false){
                   $("<p>You crush the bug into the bog, it is dead.</p>").insertBefore("#placeholder")
-                  bug = true;
+                  bugDead = true;
 
 
         //look nBog
