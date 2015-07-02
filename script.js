@@ -251,7 +251,7 @@ function refreshStatWindow(){
 function comBat(enemy){
       inCombat = true
 
-      $("<p>You attack the "+enemy.name+"!</p>").insertBefore("#Bplaceholder")
+      $("<p><b>You attack the "+enemy.name+"!</b></p>").insertBefore("#Bplaceholder")
       if(equipment.weapon =="unarmed"){
           var delay = 5000
       }else{
@@ -265,7 +265,7 @@ function comBat(enemy){
 
                       if(enemyHP > 0){
                           player.hitpoints -= edmg
-                          $("<p>The "+enemy.name+" bites your back for "+edmg+"!</p>").insertBefore("#Bplaceholder")
+                          $("<p>The "+enemy.name+" bites <b>your</b> back for "+edmg+"!</p>").insertBefore("#Bplaceholder")
                           $("#combatContainer").scrollTop($("#combatContainer")[0].scrollHeight)
                       }
 
@@ -807,7 +807,7 @@ else if(input =="look" && currentArea == "bogCamp"){
         // wrong command condition
                 else{
                     $("<p> >> "+input+"</p>").insertBefore("#placeholder")
-                    $("<p>I don't understand "+input+".</p>").insertBefore("#placeholder")
+                    $("<p>I don't understand \""+input+"\".</p>").insertBefore("#placeholder")
                 }
               }
 
