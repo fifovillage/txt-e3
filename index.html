@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="stylesheet.css">
-    <link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
-    <script src="http://ohlongjohn.com/jquery-1.11.3.min.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,
+
+<head>
+  <link rel="stylesheet" href="stylesheet.css">
+  <link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+  <script src="http://ohlongjohn.com/jquery-1.11.3.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,
     user-scalable=no">
-    <title>Bog Traversal</title>
-  </head>
-  <body>
+  <title>Bog Traversal</title>
+</head>
 
-    <div id="statwindow">
-      <p id="playerName" style="color:white;"></p>
-      <p id="lvl" style="color:white;"></p>
-      <p id="hp" style="color:limegreen;"></p>
-      <p id="mp" style="color:steelblue;"></p>
-      <p id="xp" style="color:#D1DA20;"></p>
-      <p id="currency" style="color:#E5E4E2;"></p>
+<body>
+
+  <div id="statwindow">
+    <p id="playerName" style="color:white;"></p>
+    <p id="lvl" style="color:white;"></p>
+    <p id="hp" style="color:limegreen;"></p>
+    <p id="mp" style="color:steelblue;"></p>
+    <p id="xp" style="color:#D1DA20;"></p>
+    <p id="currency" style="color:#E5E4E2;"></p>
+  </div>
+
+  <div id="combatContainer">
+    <div id="combatConsole">
+      <div id="Bplaceholder"></div>
+    </div>
+  </div>
+
+  <div id="mainContainer">
+    <div id="mainConsole">
+
+      <p id="msgStart">Welcome to Bog Adventures.</p>
+      <p id="firstArea">What dost thou call thineself?</p>
+      <div id="placeholder"></div>
+
     </div>
 
-    <div id="combatContainer">
-      <div id = "combatConsole">
-        <div id="Bplaceholder"></div>
-      </div>
-    </div>
+    <form onsubmit="return false;">
+      <input type="text" size="50" autofocus="autofocus" id="cmdLine">
+    </form>
+  </div>
 
-    <div id="mainContainer">
-      <div id="mainConsole">
+  <script src="script.js"></script>
+</body>
 
-        <p id="msgStart">Welcome to Bog Adventures.</p> <!--Type <b>help</b> for a list of commands.-->
-
-        <p id="firstArea">What dost thou call thineself?</p>
-
-        <div id="placeholder"></div>
-
-      </div>
-
-      <form onsubmit="return false;">
-        <input type="text" size="50" autofocus="autofocus" id="cmdLine">
-      </form>
-    </div>
-
-
-<script src="script.js"></script>
-  </body>
 </html>

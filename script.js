@@ -335,6 +335,7 @@ setInterval(refreshStatWindow, 100)
 
     $("form").submit(function(){
       var input = $("#cmdLine").val().toLowerCase();
+      input = input.replace(/<|>/g, "")
       move_count ++
       console.log('move #' + move_count)
 
@@ -366,8 +367,7 @@ if(player.hitpoints > 0){
 
         else if(input == "help" && currentArea != null){
             $("<p> > "+input+"</p>").insertBefore("#placeholder")
-            $("<p>Here is a list of commands"
-            +"<br>===================="
+            $("<p>Here is a list of commands:"
             +"<br><b>n</b>orth / <b>s</b>outh / <b>e</b>ast / <b>w</b>est"
             +"<br>look<br>get/take <i>object</i>"
             +"<br>examine <i>object</i>"
