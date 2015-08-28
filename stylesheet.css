@@ -2,9 +2,14 @@ body{
   background-color: black;
 }
 
+b{
+  font-size: 105%;
+}
+
 p{
   margin:17px;
 }
+
 #statwindow{
   font-family: tahoma;
   font-size: 95%;
@@ -14,7 +19,6 @@ p{
 
 #statwindow p{
   margin: 4px;
-
 }
 
 #mainContainer{
@@ -68,8 +72,8 @@ p{
   font-family: tahoma;
   font-size: 16px;
   background-color:black;
-  width: 101%;
+  width: 100.5%;
   color:white;
   outline:none;
-  border: 1px solid rgba(100,100,100,.3);
+  border: 2px solid rgba(100,100,100,.3);
 }
