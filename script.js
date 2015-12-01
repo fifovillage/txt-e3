@@ -1,34 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 // initial zone info
-var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. "
-  + "After admiring a bug in the bog water, you hear your Mother calling for you in the distance. "
-  + "\"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make "
-  + "the long slog through the bog in time. There seems to be some light shining from the west.</p>"
+var nBogInfo = "<p>[Northern Bog Coast]<br>You are in the northern area of the bog, along the coastline. " + "After admiring a bug in the bog water, you hear your Mother calling for you in the distance. " + "\"It's time you came back for dinner!\", she shouts. Your mind wanders as to how you will make " + "the long slog through the bog in time. There seems to be some light shining from the west.</p>"
 
-var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>An extremely tall basketball goal stands before you on the beach. "
-  + "Waves lap gently against the shore, soothing your feeble mind.</p>"
+var eBogCoastInfo = "<p>[Eastern Bog Coast]<br>An extremely tall basketbog goal stands before you on the beach. " + "Waves lap gently against the shore, soothing your feeble mind.</p>"
 
-var eBogInfo = "<p>[Eastern Bog]<br>You approach a bonfire blazing brightly at the brink of the bog. A man bound to a "
-  + "stalk sways gently in the breeze. He mumbles something unintelligible. The bristling brush of bean "
-  + "blossoms blocks your body from slogging deeper into the bog. A deafening cacophony of snake and "
-  + "crab calls surrounds you.</p>"
+var eBogInfo = "<p>[Eastern Bog]<br>You approach a bonfire blazing brightly at the brink of the bog. A man bound to a " + "stalk sways gently in the breeze. He mumbles something unintelligible. The bristling brush of bean " + "blossoms blocks your body from slogging deeper into the bog. A deafening cacophony of snake and " + "crab calls surrounds you.</p>"
 
-var cBogInfo = "<p>[Central Bog]<br>Looking around, the bog appears to extend in every direction. "
-  + "The murky bog water pools in the center of the area, surrounded by a thick muck. Tufts of "
-  + "moss spot the damp stones and tree trunks. Darkness seems to extend all around you. "
-  + "The claustrophobic nature of the bog is near overwhelming.</p>"
+var cBogInfo = "<p>[Central Bog]<br>Looking around, the bog appears to extend in every direction. " + "The murky bog water pools in the center of the area, surrounded by a thick muck. Tufts of " + "moss spot the damp stones and tree trunks. Darkness seems to extend all around you. " + "The claustrophobic nature of the bog is near overwhelming.</p>"
 
 var sBogInfo = "<p>[Southern Bog]<br></p>"
 
-var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. "
-  + "The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye "
-  + "from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading "
-  + "south in the mud of the bog.</p>"
+var wBogCoastInfo = "<p>[Western Bog Coast]<br>After climbing over a fallen log, you enter the western part of the bog. " + "The sun is setting, and a dark fog settles in over the bog floor. A glint of light catches your eye " + "from beneath a small pile of sod in the bog. The setting sun reveals a set of wagon tracks heading " + "south in the mud of the bog.</p>"
 
-var wBogInfo = "<p>[Western Bog]<br>Stone of odd carvings</p>"
+var wBogInfo = "<p>[Western Bog]<br>Stone of odd engraving</p>"
 
-var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home. What "
-+ "might pass as a mailbox stands in front of the home. There is a man standing here.</p>"
+var houseFrontInfo = "<p>[Shack - Front Yard]<br>In front of you stands the ramshackle hut you and your mother call home. What " + "might pass as a mailbox stands in front of the home. There is a man standing here. </p>"
 
 var houseInfo = "<p>[Shack]<br></p>"
 
@@ -435,7 +421,7 @@ $(document).ready(function() {
     var input = $("#cmdLine").val().toLowerCase();
     input = input.replace(/<|>/g, "")
     player.moves++
-    console.log('move #' + player.moves)
+      console.log('move #' + player.moves)
 
 
     if (player.hitpoints > 0) {
@@ -458,7 +444,7 @@ $(document).ready(function() {
             currentArea = "nBog"
           }, 3500)
 
-          setInterval(refreshStatWindow, 100)
+        setInterval(refreshStatWindow, 100)
       }
 
 
@@ -466,6 +452,7 @@ $(document).ready(function() {
       ////////////////////////////////////////////////////////////////////////////////
       // HELP INPUT
       else if (input == "help" && currentArea != null) {
+        player.moves--
         $("<p> > " + input + "</p>").insertBefore("#placeholder")
         $("<p>Here is a list of commands:" + "<br><b>n</b>orth / <b>s</b>outh / <b>e</b>ast / <b>w</b>est" + "<br>look<br>get/take <i>object</i>" + "<br>examine <i>object</i>" + "<br>attack <i>object/person/creature</i>" + "<br>talk to <i>object/person/creature</i>" + "<br>inventory" + "<br>use <i>object/inventory item</i>" + "<br>use <i>object/inventory item</i> on <i>object/inventory item</i>" + "<br>equip <i>weapon</i>" + "</p>").insertBefore("#placeholder")
 
